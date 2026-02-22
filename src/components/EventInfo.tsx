@@ -1,8 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
+import TicketModal from "./TicketModal";
 
 export default function EventInfo() {
+    const [isTicketOpen, setIsTicketOpen] = useState(false);
+
     return (
         <section className="section-padding flex-center" style={{ backgroundColor: "var(--color-primary)", position: "relative", zIndex: 10 }}>
             <div className="container" style={{ width: "100%", maxWidth: "800px" }}>
@@ -72,12 +76,19 @@ export default function EventInfo() {
                             <p style={{ fontSize: "1.3rem", fontFamily: "var(--font-heading)", letterSpacing: "0.1em", marginBottom: "1rem" }}>
                                 AYAMI BALLET STUDIO
                             </p>
+                            <button
+                                onClick={() => setIsTicketOpen(true)}
+                                className="btn-primary"
+                                style={{ display: "inline-block", fontSize: "0.9rem", padding: "0.75rem 2rem", marginBottom: "1rem" }}
+                            >
+                                デジタルチケットを表示
+                            </button>
+                            <br />
                             <a
                                 href="https://ayami-ballet.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="btn-primary"
-                                style={{ display: "inline-block", fontSize: "0.9rem", padding: "0.5rem 1.5rem" }}
+                                style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", textDecoration: "underline" }}
                             >
                                 スタジオ公式サイトへ
                             </a>
@@ -85,6 +96,8 @@ export default function EventInfo() {
                     </div>
                 </motion.div>
             </div>
+
+            <TicketModal isOpen={isTicketOpen} onClose={() => setIsTicketOpen(false)} />
         </section>
     );
 }
