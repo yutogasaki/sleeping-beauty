@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -15,9 +15,26 @@ const messages = [
 
 export default function MessagesSection() {
     const [activeId, setActiveId] = useState<number | null>(null);
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+
+    const activeMessage = messages.find(m => m.id === activeId);
+
+    const handleFormSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        setFormStatus('submitting');
+        // モックの送信遅延
+        setTimeout(() => {
+            setFormStatus('success');
+            setTimeout(() => {
+                setIsFormOpen(false);
+                setFormStatus('idle');
+            }, 2500); // 成功画面を2.5秒表示してから閉じる
+        }, 1500);
+    };
 
     return (
-        <section className="section-padding" style={{ position: "relative", minHeight: "100vh", backgroundColor: "var(--color-primary-dark)", overflow: "hidden" }}>
+        <section className="section-padding" style={{ position: "relative", minHeight: "100dvh", backgroundColor: "var(--color-primary-dark)", overflow: "hidden" }}>
 
             {/* Background Forest Layer */}
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.4 }}>
@@ -101,43 +118,16 @@ export default function MessagesSection() {
                                 />
                             </motion.div>
 
-                            {/* Popup Message */}
-                            {isActive && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.9 }}
-                                    className="glass-panel"
-                                    style={{
-                                        position: "absolute",
-                                        top: "100%",
-                                        left: "50%",
-                                        transform: "translateX(-50%)",
-                                        width: "250px",
-                                        padding: "1.5rem",
-                                        marginTop: "1rem",
-                                        textAlign: "center",
-                                        boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-                                        border: "1px solid var(--color-accent)",
-                                    }}
-                                    onClick={(e) => e.stopPropagation()}
-                                >
-                                    <p style={{ fontSize: "1rem", color: "var(--color-text)", marginBottom: "0.5rem", fontFamily: "var(--font-heading)" }}>
-                                        {msg.text}
-                                    </p>
-                                    <div style={{ fontSize: "0.9rem", color: "var(--color-accent)", marginTop: "1rem" }}>
-                                        <span style={{ fontWeight: "bold" }}>{msg.name}</span>
-                                        <span style={{ display: "block", fontSize: "0.8rem", color: "var(--color-text-muted)" }}>{msg.role}</span>
-                                    </div>
-                                </motion.div>
-                            )}
+                            {/* Popup Message was moved out to a modal */}
                         </motion.div>
                     );
                 })}
             </div>
 
             <div className="flex-center" style={{ marginTop: "2rem", zIndex: 10, position: "relative" }}>
-                <button className="btn-primary">意気込みを投稿する（生徒専用）</button>
+                <button className="btn-primary" onClick={() => setIsFormOpen(true)}>
+                    意気込みを投稿する（生徒専用）
+                </button>
             </div>
 
             {/* Decorative Crown Layer */}
@@ -154,6 +144,148 @@ export default function MessagesSection() {
                     style={{ objectFit: "contain", objectPosition: "bottom right", mixBlendMode: 'screen' }}
                 />
             </motion.div>
+
+            {/* Modal Overlay for Showing Message */}
+            <AnimatePresence>
+                {activeMessage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: "fixed",
+                            top: 0, left: 0, right: 0, bottom: 0,
+                            backgroundColor: "rgba(5, 10, 17, 0.85)",
+                            backdropFilter: "blur(4px)",
+                            zIndex: 100,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "1rem"
+                        }}
+                        onClick={() => setActiveId(null)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            className="glass-panel"
+                            style={{
+                                width: "100%",
+                                maxWidth: "400px",
+                                padding: "3rem 2rem",
+                                textAlign: "center",
+                                position: "relative",
+                                boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+                                border: "1px solid rgba(212, 175, 55, 0.3)"
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button
+                                onClick={() => setActiveId(null)}
+                                style={{ position: "absolute", top: "15px", right: "20px", background: "none", border: "none", color: "var(--color-text-muted)", fontSize: "1.8rem", cursor: "pointer", padding: "5px" }}
+                            >
+                                ×
+                            </button>
+                            <p style={{ fontSize: "1.2rem", color: "var(--color-text)", marginBottom: "2rem", fontFamily: "var(--font-heading)", lineHeight: 1.8 }}>
+                                "{activeMessage.text}"
+                            </p>
+                            <div style={{ color: "var(--color-accent)" }}>
+                                <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}>{activeMessage.name}</span>
+                                <span style={{ display: "block", fontSize: "0.9rem", color: "var(--color-text-muted)", marginTop: "0.3rem" }}>{activeMessage.role}</span>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Modal Overlay for Submission Form */}
+            <AnimatePresence>
+                {isFormOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: "fixed",
+                            top: 0, left: 0, right: 0, bottom: 0,
+                            backgroundColor: "rgba(5, 10, 17, 0.85)",
+                            backdropFilter: "blur(5px)",
+                            zIndex: 100,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            padding: "1rem"
+                        }}
+                        onClick={() => setIsFormOpen(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            className="glass-panel"
+                            style={{
+                                width: "100%",
+                                maxWidth: "500px",
+                                padding: "2.5rem 2rem",
+                                position: "relative",
+                                textAlign: "left",
+                                boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+                                border: "1px solid rgba(212, 175, 55, 0.3)"
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button
+                                onClick={() => setIsFormOpen(false)}
+                                style={{ position: "absolute", top: "15px", right: "20px", background: "none", border: "none", color: "var(--color-text-muted)", fontSize: "1.8rem", cursor: "pointer", padding: "5px" }}
+                            >
+                                ×
+                            </button>
+
+                            {formStatus === 'success' ? (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="flex-center"
+                                    style={{ flexDirection: 'column', height: '250px', textAlign: 'center' }}
+                                >
+                                    <div style={{ fontSize: '4rem', marginBottom: '1rem', filter: 'drop-shadow(0 0 10px rgba(212,175,55,0.8))' }}>✨</div>
+                                    <h4 style={{ color: 'var(--color-accent)', marginBottom: '0.8rem', fontSize: '1.4rem' }}>意気込みが森に宿りました</h4>
+                                    <p style={{ color: 'var(--color-text-muted)', fontSize: '1rem', lineHeight: 1.6 }}>運営の確認後、<br />光の粒となって現れます。</p>
+                                </motion.div>
+                            ) : (
+                                <form onSubmit={handleFormSubmit}>
+                                    <h4 style={{ color: "var(--color-accent)", marginBottom: "1.5rem", textAlign: "center", fontSize: "1.4rem" }}>意気込みを投稿する</h4>
+
+                                    <div style={{ marginBottom: "1.2rem" }}>
+                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>お名前（ニックネーム可）</label>
+                                        <input required type="text" style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", outline: "none" }} />
+                                    </div>
+
+                                    <div style={{ marginBottom: "1.2rem" }}>
+                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>演目・配役など</label>
+                                        <input required type="text" placeholder="例：ワルツ、妖精など" style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", outline: "none" }} />
+                                    </div>
+
+                                    <div style={{ marginBottom: "2rem" }}>
+                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>意気込みメッセージ</label>
+                                        <textarea required rows={4} style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", resize: "none", outline: "none" }}></textarea>
+                                    </div>
+
+                                    <button
+                                        type="submit"
+                                        className="btn-primary"
+                                        style={{ width: "100%", opacity: formStatus === 'submitting' ? 0.7 : 1 }}
+                                        disabled={formStatus === 'submitting'}
+                                    >
+                                        {formStatus === 'submitting' ? '送信中...' : '光の粒を送る'}
+                                    </button>
+                                </form>
+                            )}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
         </section>
     );

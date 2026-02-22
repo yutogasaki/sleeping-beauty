@@ -27,7 +27,7 @@ export default function MainHero() {
     const yFgCorps = useTransform(scrollY, [0, 800], [0, -200]);
 
     return (
-        <section className="hero-section" style={{ position: "relative", height: "100vh", overflow: "hidden", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <section className="hero-section" style={{ position: "relative", height: "100dvh", overflow: "hidden", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
             {/* --- LAYER 1: Background (遠景) --- */}
             <motion.div style={{ y: yBg, position: 'absolute', top: 0, left: 0, right: 0, bottom: "-20%", zIndex: 1 }}>
@@ -106,7 +106,8 @@ export default function MainHero() {
                     maskImage: "radial-gradient(ellipse at 50% 60%, black 10%, transparent 60%)",
                     WebkitMaskImage: "radial-gradient(ellipse at 50% 60%, black 10%, transparent 60%)",
                     filter: "brightness(0.7) contrast(2) blur(1px)",
-                    opacity: 0.8
+                    opacity: 0.8,
+                    willChange: "transform"
                 }}
             >
                 <Image
@@ -132,9 +133,10 @@ export default function MainHero() {
                     zIndex: 15,
                     pointerEvents: 'none',
                     mixBlendMode: "screen",
-                    maskImage: "radial-gradient(ellipse at 50% 60%, black 20%, transparent 65%)",
-                    WebkitMaskImage: "radial-gradient(ellipse at 50% 60%, black 20%, transparent 65%)",
-                    filter: "brightness(0.8) contrast(2) drop-shadow(0 0 5px rgba(212, 175, 55, 0.5))"
+                    maskImage: "radial-gradient(ellipse at 50% 80%, black 40%, transparent 75%)",
+                    WebkitMaskImage: "radial-gradient(ellipse at 50% 80%, black 40%, transparent 75%)",
+                    filter: "brightness(1.5) contrast(2) drop-shadow(0 0 10px rgba(212, 175, 55, 0.5))",
+                    willChange: "transform"
                 }}
             >
                 <Image
