@@ -1,5 +1,8 @@
 import MainHero from "../components/MainHero";
+import Prologue from "../components/Prologue";
 import Countdown from "../components/Countdown";
+import CastCards from "../components/CastCards";
+import ProgramCarousel from "../components/ProgramCarousel";
 import EventInfo from "../components/EventInfo";
 import MessagesSection from "../components/MessagesSection";
 import GiftSection from "../components/GiftSection";
@@ -9,7 +12,10 @@ export default function Home() {
   return (
     <main style={{ backgroundColor: "var(--color-primary-dark)", minHeight: "100vh" }}>
       <MainHero />
+      <Prologue />
       <Countdown />
+      <CastCards />
+      <ProgramCarousel />
       <EventInfo />
       <MessagesSection />
       <GiftSection />
