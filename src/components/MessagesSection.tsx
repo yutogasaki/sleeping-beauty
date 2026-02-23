@@ -15,6 +15,14 @@ type MessageData = {
     scale?: number;
 };
 
+const SAMPLE_MESSAGES: MessageData[] = [
+    { id: "sample-1", sender_name: "Maria（オーロラ姫）", content: "初めてのトウシューズで緊張しますが、一生懸命がんばります！", color_theme: "yellow", x: 15, y: 30, scale: 1.0 },
+    { id: "sample-2", sender_name: "Yuki（リラの精）", content: "妖精の踊り、笑顔で踊りきります！", color_theme: "pink", x: 70, y: 40, scale: 0.8 },
+    { id: "sample-3", sender_name: "Sora（ワルツ）", content: "みんなと息を合わせて綺麗な円を描きたいです。", color_theme: "blue", x: 45, y: 60, scale: 1.2 },
+    { id: "sample-4", sender_name: "Aoi（フロリナ王女）", content: "失敗を恐れずに、楽しんで踊ります！", color_theme: "yellow", x: 80, y: 70, scale: 0.9 },
+    { id: "sample-5", sender_name: "Hina（宝石の精）", content: "練習の成果を全部出し切ります！", color_theme: "pure", x: 25, y: 75, scale: 1.1 },
+];
+
 export default function MessagesSection() {
     const [messages, setMessages] = useState<MessageData[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
@@ -24,27 +32,32 @@ export default function MessagesSection() {
     // フォーム用ステート
     const [formData, setFormData] = useState({ name: "", role: "", message: "", color: "yellow" });
 
-    // 初期データの取得
+    // 初期データの取得（DB未接続・空の場合はサンプルデータを表示）
     useEffect(() => {
         const fetchMessages = async () => {
-            if (!supabase) return;
+            if (!supabase) {
+                setMessages(SAMPLE_MESSAGES);
+                return;
+            }
             const { data, error } = await supabase
                 .from('messages')
                 .select('*')
-                .eq('is_approved', true) // セキュリティポリシー側でも制限されているが念のため
+                .eq('is_approved', true)
                 .order('created_at', { ascending: false });
 
             if (error) {
                 console.error("Error fetching messages:", error);
-            } else if (data) {
-                // UI表示用にランダムな位置とサイズを付与
+                setMessages(SAMPLE_MESSAGES);
+            } else if (data && data.length > 0) {
                 const messagesWithPositions = data.map(msg => ({
                     ...msg,
-                    x: 10 + Math.random() * 80, // 10% ~ 90%
-                    y: 20 + Math.random() * 60, // 20% ~ 80%
-                    scale: 0.7 + Math.random() * 0.6 // 0.7 ~ 1.3
+                    x: 10 + Math.random() * 80,
+                    y: 20 + Math.random() * 60,
+                    scale: 0.7 + Math.random() * 0.6
                 }));
                 setMessages(messagesWithPositions);
+            } else {
+                setMessages(SAMPLE_MESSAGES);
             }
         };
         fetchMessages();
