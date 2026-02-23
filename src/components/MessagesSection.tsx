@@ -2,35 +2,91 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "../lib/supabaseClient";
 
-// Mock data
-const messages = [
-    { id: 1, name: "Maria", text: "初めてのトウシューズで緊張しますが、一生懸命がんばります！", role: "オーロラ姫", x: 15, y: 30, scale: 1 },
-    { id: 2, name: "Yuki", text: "妖精の踊り、笑顔で踊りきります！", role: "リラの精", x: 70, y: 40, scale: 0.8 },
-    { id: 3, name: "Sora", text: "みんなと息を合わせて綺麗な円を描きたいです。", role: "ワルツ", x: 45, y: 60, scale: 1.2 },
-    { id: 4, name: "Aoi", text: "失敗を恐れずに、楽しんで踊ります！", role: "フロリナ王女", x: 80, y: 70, scale: 0.9 },
-    { id: 5, name: "Hina", text: "練習の成果を全部出し切ります！", role: "宝石の精", x: 25, y: 75, scale: 1.1 },
-];
+type MessageData = {
+    id: string; // uuid
+    sender_name: string;
+    content: string;
+    color_theme: string;
+    x?: number;
+    y?: number;
+    scale?: number;
+};
 
 export default function MessagesSection() {
-    const [activeId, setActiveId] = useState<number | null>(null);
+    const [messages, setMessages] = useState<MessageData[]>([]);
+    const [activeId, setActiveId] = useState<string | null>(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
+    // フォーム用ステート
+    const [formData, setFormData] = useState({ name: "", role: "", message: "", color: "yellow" });
+
+    // 初期データの取得
+    useEffect(() => {
+        const fetchMessages = async () => {
+            if (!supabase) return;
+            const { data, error } = await supabase
+                .from('messages')
+                .select('*')
+                .eq('is_approved', true) // セキュリティポリシー側でも制限されているが念のため
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error("Error fetching messages:", error);
+            } else if (data) {
+                // UI表示用にランダムな位置とサイズを付与
+                const messagesWithPositions = data.map(msg => ({
+                    ...msg,
+                    x: 10 + Math.random() * 80, // 10% ~ 90%
+                    y: 20 + Math.random() * 60, // 20% ~ 80%
+                    scale: 0.7 + Math.random() * 0.6 // 0.7 ~ 1.3
+                }));
+                setMessages(messagesWithPositions);
+            }
+        };
+        fetchMessages();
+    }, []);
+
     const activeMessage = messages.find(m => m.id === activeId);
 
-    const handleFormSubmit = (e: React.FormEvent) => {
+    const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setFormStatus('submitting');
-        // モックの送信遅延
+
+        if (!supabase) {
+            alert("データベースに接続されていません。");
+            setFormStatus('idle');
+            return;
+        }
+
+        const senderNameCombined = formData.role ? `${formData.name}（${formData.role}）` : formData.name;
+
+        const { error } = await supabase
+            .from('messages')
+            .insert([
+                {
+                    sender_name: senderNameCombined,
+                    content: formData.message,
+                    color_theme: formData.color
+                }
+            ]);
+
+        if (error) {
+            console.error("Error inserting message:", error);
+            alert("エラーが発生しました。もう一度お試しください。");
+            setFormStatus('idle');
+            return;
+        }
+
+        setFormStatus('success');
         setTimeout(() => {
-            setFormStatus('success');
-            setTimeout(() => {
-                setIsFormOpen(false);
-                setFormStatus('idle');
-            }, 2500); // 成功画面を2.5秒表示してから閉じる
-        }, 1500);
+            setIsFormOpen(false);
+            setFormStatus('idle');
+            setFormData({ name: "", role: "", message: "", color: "yellow" });
+        }, 3000);
     };
 
     return (
@@ -103,19 +159,27 @@ export default function MessagesSection() {
                                 style={{ position: 'relative', width: "60px", height: "60px", margin: "0 auto" }}
                                 className="flex-center"
                             >
-                                <Image
-                                    src="/images/light_particle.png"
-                                    alt="Light Particle"
-                                    width={60}
-                                    height={60}
-                                    style={{
-                                        objectFit: "contain",
-                                        mixBlendMode: "screen",
-                                        filter: "brightness(1.5) contrast(2) drop-shadow(0 0 15px rgba(255, 235, 150, 0.9))",
-                                        maskImage: "radial-gradient(circle, black 30%, transparent 70%)",
-                                        WebkitMaskImage: "radial-gradient(circle, black 30%, transparent 70%)"
-                                    }}
-                                />
+                                <div style={{
+                                    position: 'relative', width: "60px", height: "60px", margin: "0 auto",
+                                    // color_theme に応じて色味を変えるフィルター処理
+                                    filter: msg.color_theme === 'pink' ? 'hue-rotate(300deg)' :
+                                        msg.color_theme === 'blue' ? 'hue-rotate(180deg)' :
+                                            msg.color_theme === 'pure' ? 'grayscale(100%) brightness(2)' : 'none'
+                                }}>
+                                    <Image
+                                        src="/images/light_particle.png"
+                                        alt="Light Particle"
+                                        width={60}
+                                        height={60}
+                                        style={{
+                                            objectFit: "contain",
+                                            mixBlendMode: "screen",
+                                            filter: "brightness(1.5) contrast(2) drop-shadow(0 0 15px rgba(255, 235, 150, 0.9))",
+                                            maskImage: "radial-gradient(circle, black 30%, transparent 70%)",
+                                            WebkitMaskImage: "radial-gradient(circle, black 30%, transparent 70%)"
+                                        }}
+                                    />
+                                </div>
                             </motion.div>
 
                             {/* Popup Message was moved out to a modal */}
@@ -187,12 +251,11 @@ export default function MessagesSection() {
                             >
                                 ×
                             </button>
-                            <p style={{ fontSize: "1.2rem", color: "var(--color-text)", marginBottom: "2rem", fontFamily: "var(--font-heading)", lineHeight: 1.8 }}>
-                                "{activeMessage.text}"
+                            <p style={{ fontSize: "1.2rem", color: "var(--color-text)", marginBottom: "2rem", fontFamily: "var(--font-heading)", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>
+                                "{activeMessage.content}"
                             </p>
                             <div style={{ color: "var(--color-accent)" }}>
-                                <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}>{activeMessage.name}</span>
-                                <span style={{ display: "block", fontSize: "0.9rem", color: "var(--color-text-muted)", marginTop: "0.3rem" }}>{activeMessage.role}</span>
+                                <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}>{activeMessage.sender_name}</span>
                             </div>
                         </motion.div>
                     </motion.div>
@@ -259,17 +322,29 @@ export default function MessagesSection() {
 
                                     <div style={{ marginBottom: "1.2rem" }}>
                                         <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>お名前（ニックネーム可）</label>
-                                        <input required type="text" style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", outline: "none" }} />
+                                        <input required type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", outline: "none" }} />
                                     </div>
 
                                     <div style={{ marginBottom: "1.2rem" }}>
-                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>演目・配役など</label>
-                                        <input required type="text" placeholder="例：ワルツ、妖精など" style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", outline: "none" }} />
+                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>演目・配役など（任意）</label>
+                                        <input type="text" value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })} placeholder="例：ワルツ、妖精など" style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", outline: "none" }} />
+                                    </div>
+
+                                    <div style={{ marginBottom: "1.2rem" }}>
+                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>光の粒の色</label>
+                                        <div style={{ display: "flex", gap: "1rem" }}>
+                                            {['yellow', 'pink', 'blue', 'pure'].map(c => (
+                                                <label key={c} style={{ display: "flex", alignItems: "center", gap: "0.3rem", cursor: "pointer", color: "white", fontSize: "0.9rem" }}>
+                                                    <input type="radio" name="color" value={c} checked={formData.color === c} onChange={() => setFormData({ ...formData, color: c })} />
+                                                    {c === 'yellow' ? '黄金' : c === 'pink' ? '桜色' : c === 'blue' ? '蒼穹' : '純白'}
+                                                </label>
+                                            ))}
+                                        </div>
                                     </div>
 
                                     <div style={{ marginBottom: "2rem" }}>
                                         <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>意気込みメッセージ</label>
-                                        <textarea required rows={4} style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", resize: "none", outline: "none" }}></textarea>
+                                        <textarea required rows={4} value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", resize: "none", outline: "none" }}></textarea>
                                     </div>
 
                                     <button
