@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { supabase } from "../lib/supabaseClient";
+import { usePreview } from "../lib/PreviewContext";
+import { SAMPLE_MESSAGES } from "../lib/sampleData";
 
 type MessageData = {
     id: string; // uuid
@@ -15,15 +17,8 @@ type MessageData = {
     scale?: number;
 };
 
-const SAMPLE_MESSAGES: MessageData[] = [
-    { id: "sample-1", sender_name: "Maria（オーロラ姫）", content: "初めてのトウシューズで緊張しますが、一生懸命がんばります！", color_theme: "yellow", x: 15, y: 30, scale: 1.0 },
-    { id: "sample-2", sender_name: "Yuki（リラの精）", content: "妖精の踊り、笑顔で踊りきります！", color_theme: "pink", x: 70, y: 40, scale: 0.8 },
-    { id: "sample-3", sender_name: "Sora（ワルツ）", content: "みんなと息を合わせて綺麗な円を描きたいです。", color_theme: "blue", x: 45, y: 60, scale: 1.2 },
-    { id: "sample-4", sender_name: "Aoi（フロリナ王女）", content: "失敗を恐れずに、楽しんで踊ります！", color_theme: "yellow", x: 80, y: 70, scale: 0.9 },
-    { id: "sample-5", sender_name: "Hina（宝石の精）", content: "練習の成果を全部出し切ります！", color_theme: "pure", x: 25, y: 75, scale: 1.1 },
-];
-
 export default function MessagesSection() {
+    const isPreview = usePreview();
     const [messages, setMessages] = useState<MessageData[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -32,8 +27,12 @@ export default function MessagesSection() {
     // フォーム用ステート
     const [formData, setFormData] = useState({ name: "", role: "", message: "", color: "yellow" });
 
-    // 初期データの取得（DB未接続・空の場合はサンプルデータを表示）
+    // 初期データの取得（プレビューモード・DB未接続・空の場合はサンプルデータを表示）
     useEffect(() => {
+        if (isPreview) {
+            setMessages(SAMPLE_MESSAGES);
+            return;
+        }
         const fetchMessages = async () => {
             if (!supabase) {
                 setMessages(SAMPLE_MESSAGES);
@@ -61,7 +60,63 @@ export default function MessagesSection() {
             }
         };
         fetchMessages();
-    }, []);
+    }, [isPreview]);
+
+    // リアルタイム更新：承認されたメッセージが自動で光の粒として出現
+    useEffect(() => {
+        if (isPreview || !supabase) return;
+
+        const channel = supabase
+            .channel('messages-realtime')
+            .on('postgres_changes',
+                { event: 'INSERT', schema: 'public', table: 'messages' },
+                (payload) => {
+                    const newMsg = payload.new as MessageData & { is_approved?: boolean };
+                    if (newMsg.is_approved) {
+                        setMessages(prev => [...prev, {
+                            ...newMsg,
+                            x: 10 + Math.random() * 80,
+                            y: 20 + Math.random() * 60,
+                            scale: 0.7 + Math.random() * 0.6,
+                        }]);
+                    }
+                }
+            )
+            .on('postgres_changes',
+                { event: 'UPDATE', schema: 'public', table: 'messages' },
+                (payload) => {
+                    const updated = payload.new as MessageData & { is_approved?: boolean };
+                    if (updated.is_approved) {
+                        // 承認された → リストになければ追加
+                        setMessages(prev => {
+                            const exists = prev.some(m => m.id === updated.id);
+                            if (exists) return prev;
+                            return [...prev, {
+                                ...updated,
+                                x: 10 + Math.random() * 80,
+                                y: 20 + Math.random() * 60,
+                                scale: 0.7 + Math.random() * 0.6,
+                            }];
+                        });
+                    } else {
+                        // 非承認にされた → リストから削除
+                        setMessages(prev => prev.filter(m => m.id !== updated.id));
+                    }
+                }
+            )
+            .on('postgres_changes',
+                { event: 'DELETE', schema: 'public', table: 'messages' },
+                (payload) => {
+                    const deleted = payload.old as { id: string };
+                    setMessages(prev => prev.filter(m => m.id !== deleted.id));
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase!.removeChannel(channel);
+        };
+    }, [isPreview]);
 
     const activeMessage = messages.find(m => m.id === activeId);
 
