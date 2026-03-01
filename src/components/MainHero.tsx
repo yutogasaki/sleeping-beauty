@@ -75,9 +75,8 @@ export default function MainHero() {
                         眠れる森の美女
                     </h1>
                     <p style={{ fontSize: "clamp(1rem, 2vw, 1.1rem)", color: "var(--color-text-muted)", maxWidth: "600px", margin: "0 auto 3rem auto", lineHeight: 2, letterSpacing: "0.1em" }}>
-                        生徒の意気込みが光となり森に宿る。<br />
-                        観客の感想が祝福となり城を照らす。<br />
-                        本番当日、王国が目覚める。
+                        百年の眠りから目覚める、<br />
+                        特別な一日。
                     </p>
 
                     <button className="btn-primary" style={{ padding: "1rem 3rem", fontSize: "1.2rem" }}>

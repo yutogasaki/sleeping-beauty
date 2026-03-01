@@ -71,7 +71,9 @@ export default function Footer() {
                             → 豊橋市芸術劇場PLAT
                         </a>
                         <a
-                            href="#"
+                            href="https://ayami-ballet.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             style={{ color: "var(--color-text-muted)", fontSize: "0.95rem", textDecoration: "none", transition: "color 0.2s" }}
                             onMouseEnter={e => (e.currentTarget.style.color = "var(--color-accent)")}
                             onMouseLeave={e => (e.currentTarget.style.color = "var(--color-text-muted)")}
@@ -79,7 +81,9 @@ export default function Footer() {
                             → AYAMI BALLET STUDIO 公式サイト
                         </a>
                         <a
-                            href="#"
+                            href="https://www.instagram.com/ayami.ballet.studio/"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             style={{ color: "var(--color-text-muted)", fontSize: "0.95rem", textDecoration: "none", transition: "color 0.2s" }}
                             onMouseEnter={e => (e.currentTarget.style.color = "var(--color-accent)")}
                             onMouseLeave={e => (e.currentTarget.style.color = "var(--color-text-muted)")}

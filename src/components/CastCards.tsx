@@ -17,7 +17,7 @@ const castData: CastType[] = [
     {
         id: "aurora",
         role: "オーロラ姫",
-        name: "YUKI",
+        name: "成田 寧音",
         description: "16歳の誕生日に呪いを受け、100年の眠りにつく美しき王女。気品高く、すべての者に愛される光のような存在。",
         color: "#FFB7B2", // 柔らかいピンク系
         icon: "👑"
@@ -25,7 +25,7 @@ const castData: CastType[] = [
     {
         id: "desire",
         role: "デジレ王子",
-        name: "KEN",
+        name: "長谷川 元志",
         description: "100年後の世界でリラの精に導かれ、オーロラ姫の呪いを解く運命の王子。",
         color: "#A2C2E6", // ロイヤルブルー寄り
         icon: "🗡️"
@@ -33,16 +33,16 @@ const castData: CastType[] = [
     {
         id: "lilac",
         role: "リラの精",
-        name: "SARA",
+        name: "甲斐 愛",
         description: "善と知恵の象徴。カラボスの呪いを和らげ、オーロラと王国を絶望から救う希望の光。",
         color: "#C8A2C8", // ライラック色
         icon: "✨"
     },
     {
         id: "carabosse",
-        role: "悪の精 カラボス",
-        name: "RINA",
-        description: "洗礼式に招かれなかったことに激怒し、姫に死の呪いをかけた強大で恐ろしい悪の妖精。",
+        role: "カラボス",
+        name: "伊藤 あゆみ",
+        description: "物語の運命を動かす闇の妖精。姫に呪いをかけ、百年の眠りへと導く重要な役どころ。",
         color: "#5C4033", // ダークブラウン/ブラック系
         icon: "🥀"
     }

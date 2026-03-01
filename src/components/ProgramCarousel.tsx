@@ -7,43 +7,37 @@ type ProgramItem = {
     id: string;
     part: string;
     title: string;
-    performers: string;
+    performers?: string;
 };
 
 const programData: ProgramItem[] = [
     {
         id: "p1",
-        part: "第一部: 小品集",
-        title: "「くるみ割り人形」より花のワルツ",
-        performers: "シニアクラス"
+        part: "第一部: クラシックバレエ小品集",
+        title: "ドン・キホーテよりグラン・パ・ド・ドゥ",
+        performers: "ゲスト、生徒一同"
     },
     {
         id: "p2",
-        part: "第一部: 小品集",
-        title: "「コッペリア」よりスワニルダのVa",
-        performers: "Aクラス代表"
+        part: "第二部: オリジナル作品",
+        title: "オリエンタル、ファンタジーミックス",
+        performers: "ゲスト、生徒一同"
     },
     {
         id: "p3",
-        part: "第二部: 眠れる森の美女",
-        title: "プロローグ: オーロラ姫の洗礼式",
-        performers: "妖精たち、王、王妃"
-    },
-    {
-        id: "p4",
-        part: "第二部: 眠れる森の美女",
+        part: "第三部: 眠りの森の美女",
         title: "第1幕: オーロラ姫の16歳の誕生日",
         performers: "オーロラ姫、求婚者たち、カラボス"
     },
     {
-        id: "p5",
-        part: "第二部: 眠れる森の美女",
+        id: "p4",
+        part: "第三部: 眠りの森の美女",
         title: "第2幕: 100年後の森〜呪いの解放",
         performers: "デジレ王子、リラの精、オーロラ姫"
     },
     {
-        id: "p6",
-        part: "第二部: 眠れる森の美女",
+        id: "p5",
+        part: "第三部: 眠りの森の美女",
         title: "第3幕: 華麗なる結婚式",
         performers: "全キャスト"
     }
@@ -55,7 +49,7 @@ export default function ProgramCarousel() {
         target: targetRef,
     });
 
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]); // データ数に応じて調整
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]); // データ数に応じて調整
 
     return (
         <section
@@ -123,12 +117,16 @@ export default function ProgramCarousel() {
                                 {item.title}
                             </h4>
 
-                            <div style={{ width: "20px", height: "1px", backgroundColor: "rgba(255,255,255,0.2)", margin: "0 auto 2rem" }} />
+                            {item.performers && (
+                                <>
+                                    <div style={{ width: "20px", height: "1px", backgroundColor: "rgba(255,255,255,0.2)", margin: "0 auto 2rem" }} />
 
-                            <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", lineHeight: 1.6 }}>
-                                <span style={{ display: "block", fontSize: "0.7rem", marginBottom: "0.5rem", opacity: 0.7 }}>出演</span>
-                                {item.performers}
-                            </p>
+                                    <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", lineHeight: 1.6 }}>
+                                        <span style={{ display: "block", fontSize: "0.7rem", marginBottom: "0.5rem", opacity: 0.7 }}>出演</span>
+                                        {item.performers}
+                                    </p>
+                                </>
+                            )}
                         </div>
                     ))}
                 </motion.div>

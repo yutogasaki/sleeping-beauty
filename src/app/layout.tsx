@@ -4,10 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://sleeping-beauty.vercel.app"),
   title: "眠れる森の美女 | AYAMI BALLET STUDIO 第4回発表会",
-  description: "2026年8月23日（日）豊橋市芸術劇場PLAT。生徒の意気込みが光となり森に宿る、バレエ発表会特設サイト。",
+  description: "2026年8月23日（日）豊橋市芸術劇場PLAT。百年の眠りから目覚める、特別な一日。バレエ発表会特設サイト。",
   openGraph: {
     title: "眠れる森の美女 | AYAMI BALLET STUDIO 第4回発表会",
-    description: "2026年8月23日（日）豊橋市芸術劇場PLAT。生徒の意気込みが光となり森に宿る、バレエ発表会特設サイト。",
+    description: "2026年8月23日（日）豊橋市芸術劇場PLAT。百年の眠りから目覚める、特別な一日。バレエ発表会特設サイト。",
     images: [{ url: "/images/ogp.png", width: 1200, height: 630 }],
     type: "website",
     locale: "ja_JP",
