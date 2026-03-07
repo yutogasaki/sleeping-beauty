@@ -169,6 +169,8 @@ export default function MessagesSection() {
                     style={{ objectFit: "cover", objectPosition: "center", mixBlendMode: 'screen' }}
                 />
             </div>
+            {/* Top fade gradient for smooth transition from previous section */}
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '30vh', background: 'linear-gradient(to bottom, var(--color-primary-dark) 0%, transparent 100%)', zIndex: 5, pointerEvents: 'none' }} />
 
             <div className="container" style={{ position: "relative", zIndex: 10, textAlign: "center", marginBottom: "4rem" }}>
                 <motion.h3

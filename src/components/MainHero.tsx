@@ -90,7 +90,7 @@ export default function MainHero() {
             {/* Corps de ballet (群舞) - 奥側の近景 */}
             <motion.div
                 initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 0.6, x: 0 }}
+                animate={{ opacity: 0.5, x: 0 }}
                 transition={{ duration: 2, delay: 0.5 }}
                 style={{
                     y: yFgCorps,
@@ -101,11 +101,10 @@ export default function MainHero() {
                     height: "80%",
                     zIndex: 5,
                     pointerEvents: 'none',
-                    mixBlendMode: "screen",
-                    maskImage: "radial-gradient(ellipse at 50% 60%, black 10%, transparent 60%)",
-                    WebkitMaskImage: "radial-gradient(ellipse at 50% 60%, black 10%, transparent 60%)",
-                    filter: "brightness(0.7) contrast(2) blur(1px)",
-                    opacity: 0.8,
+                    maskImage: "radial-gradient(ellipse at 50% 70%, black 20%, transparent 70%)",
+                    WebkitMaskImage: "radial-gradient(ellipse at 50% 70%, black 20%, transparent 70%)",
+                    filter: "drop-shadow(0 0 8px rgba(212, 175, 55, 0.3))",
+                    opacity: 0.5,
                     willChange: "transform"
                 }}
             >
@@ -131,10 +130,9 @@ export default function MainHero() {
                     height: isMobile ? "60%" : "85%",
                     zIndex: 15,
                     pointerEvents: 'none',
-                    mixBlendMode: "screen",
-                    maskImage: "radial-gradient(ellipse at 50% 80%, black 40%, transparent 75%)",
-                    WebkitMaskImage: "radial-gradient(ellipse at 50% 80%, black 40%, transparent 75%)",
-                    filter: "brightness(1.5) contrast(2) drop-shadow(0 0 10px rgba(212, 175, 55, 0.5))",
+                    maskImage: "radial-gradient(ellipse at 50% 70%, black 30%, transparent 75%)",
+                    WebkitMaskImage: "radial-gradient(ellipse at 50% 70%, black 30%, transparent 75%)",
+                    filter: "drop-shadow(0 0 15px rgba(212, 175, 55, 0.6))",
                     willChange: "transform"
                 }}
             >
