@@ -102,8 +102,8 @@ export default function MainHero() {
                     zIndex: 5,
                     pointerEvents: 'none',
                     mixBlendMode: "screen",
-                    maskImage: "radial-gradient(ellipse at 50% 60%, black 10%, transparent 60%)",
-                    WebkitMaskImage: "radial-gradient(ellipse at 50% 60%, black 10%, transparent 60%)",
+                    maskImage: "radial-gradient(ellipse at 50% 70%, black 0%, transparent 60%)",
+                    WebkitMaskImage: "radial-gradient(ellipse at 50% 70%, black 0%, transparent 60%)",
                     filter: "brightness(0.7) contrast(2) blur(1px)",
                     opacity: 0.8,
                     willChange: "transform"
@@ -132,8 +132,8 @@ export default function MainHero() {
                     zIndex: 15,
                     pointerEvents: 'none',
                     mixBlendMode: "screen",
-                    maskImage: "radial-gradient(ellipse at 50% 80%, black 40%, transparent 75%)",
-                    WebkitMaskImage: "radial-gradient(ellipse at 50% 80%, black 40%, transparent 75%)",
+                    maskImage: "radial-gradient(ellipse at 50% 70%, black 20%, transparent 65%)",
+                    WebkitMaskImage: "radial-gradient(ellipse at 50% 70%, black 20%, transparent 65%)",
                     filter: "brightness(1.5) contrast(2) drop-shadow(0 0 10px rgba(212, 175, 55, 0.5))",
                     willChange: "transform"
                 }}
