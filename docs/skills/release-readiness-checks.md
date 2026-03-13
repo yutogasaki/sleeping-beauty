@@ -29,6 +29,7 @@ A short release-readiness summary that says:
    - env-dependent behavior
    - realtime behavior
 3. Run static checks:
+   - `npm run test`
    - `npm run lint`
    - `npm run build`
 4. Run targeted manual checks for the changed area:
@@ -44,6 +45,7 @@ A short release-readiness summary that says:
 
 Minimum:
 
+- `npm run test`
 - `npm run lint`
 - `npm run build`
 

@@ -37,7 +37,7 @@ Rules are repo-specific and can evolve. They should be concrete enough to guide 
 
 - Security-sensitive writes should prefer server routes over direct client writes.
 - Public env vars must be safe to expose. Admin or privileged values must use server env vars.
-- Before push, run at least `npm run lint` and `npm run build` for user-facing or workflow-affecting changes.
+- Before push, run at least `npm run test`, `npm run lint`, and `npm run build` for user-facing or workflow-affecting changes.
 - For realtime features, treat the subscription as an enhancement and keep the initial fetch reliable.
 - Centralize stable business data such as event metadata when it appears in multiple places.
 

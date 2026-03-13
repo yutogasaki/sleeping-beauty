@@ -22,6 +22,8 @@ npm run lint
 npm run build
 ```
 
+GitHub Actions runs the same baseline checks on push and pull request via [.github/workflows/ci.yml](./.github/workflows/ci.yml).
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
