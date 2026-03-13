@@ -20,11 +20,26 @@ type AdminSessionResponse = {
   error?: string;
 };
 
+type AdminFilter = "all" | "pending" | "approved";
+
 type PinGateProps = {
   configured: boolean;
   message: string | null;
   onAuthenticated: () => Promise<void>;
 };
+
+function sortMessagesByCreatedAt(messages: Message[]) {
+  return [...messages].sort(
+    (left, right) =>
+      new Date(right.created_at).getTime() - new Date(left.created_at).getTime(),
+  );
+}
+
+function upsertMessage(messages: Message[], nextMessage: Message) {
+  const nextMessages = messages.filter((message) => message.id !== nextMessage.id);
+  nextMessages.push(nextMessage);
+  return sortMessagesByCreatedAt(nextMessages);
+}
 
 function PinGate({ configured, message, onAuthenticated }: PinGateProps) {
   const [pin, setPin] = useState("");
@@ -214,6 +229,8 @@ export default function AdminPage() {
   const [authMessage, setAuthMessage] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState<AdminFilter>("pending");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const refreshMessages = async () => {
     setLoading(true);
@@ -279,6 +296,48 @@ export default function AdminPage() {
       isActive = false;
     };
   }, []);
+
+  useEffect(() => {
+    const realtimeClient = supabase;
+
+    if (!authenticated || !realtimeClient) {
+      return;
+    }
+
+    const channel = realtimeClient
+      .channel("admin-messages-realtime")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "messages" },
+        (payload) => {
+          const nextMessage = payload.new as Message;
+          setMessages((currentMessages) => upsertMessage(currentMessages, nextMessage));
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "messages" },
+        (payload) => {
+          const nextMessage = payload.new as Message;
+          setMessages((currentMessages) => upsertMessage(currentMessages, nextMessage));
+        },
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "messages" },
+        (payload) => {
+          const deletedMessage = payload.old as Pick<Message, "id">;
+          setMessages((currentMessages) =>
+            currentMessages.filter((message) => message.id !== deletedMessage.id),
+          );
+        },
+      )
+      .subscribe();
+
+    return () => {
+      void realtimeClient.removeChannel(channel);
+    };
+  }, [authenticated]);
 
   const handleAuthenticated = async () => {
     setAuthMessage(null);
@@ -354,6 +413,28 @@ export default function AdminPage() {
     setMessages([]);
     setLoading(false);
   };
+
+  const pendingCount = messages.filter((message) => !message.is_approved).length;
+  const approvedCount = messages.length - pendingCount;
+  const normalizedSearchQuery = searchQuery.trim().toLocaleLowerCase("ja-JP");
+  const visibleMessages = messages.filter((message) => {
+    if (activeFilter === "pending" && message.is_approved) {
+      return false;
+    }
+
+    if (activeFilter === "approved" && !message.is_approved) {
+      return false;
+    }
+
+    if (!normalizedSearchQuery) {
+      return true;
+    }
+
+    return [message.sender_name, message.content, message.color_theme]
+      .join(" ")
+      .toLocaleLowerCase("ja-JP")
+      .includes(normalizedSearchQuery);
+  });
 
   if (loading) {
     return (
@@ -451,8 +532,85 @@ export default function AdminPage() {
         </div>
       )}
 
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          gap: "1rem",
+          marginBottom: "1.5rem",
+        }}
+      >
+        <StatusCard
+          label="未承認"
+          value={pendingCount}
+          accentColor="#f87171"
+          description="先に確認したい投稿"
+        />
+        <StatusCard
+          label="承認済"
+          value={approvedCount}
+          accentColor="#4ade80"
+          description="公開中の光"
+        />
+        <StatusCard
+          label="全件"
+          value={messages.length}
+          accentColor="var(--color-accent)"
+          description={supabase ? "ライブ更新中" : "サンプル表示中"}
+        />
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0.75rem",
+          marginBottom: "1.5rem",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+          <FilterButton
+            active={activeFilter === "pending"}
+            label={`未承認 (${pendingCount})`}
+            onClick={() => setActiveFilter("pending")}
+          />
+          <FilterButton
+            active={activeFilter === "approved"}
+            label={`承認済 (${approvedCount})`}
+            onClick={() => setActiveFilter("approved")}
+          />
+          <FilterButton
+            active={activeFilter === "all"}
+            label={`すべて (${messages.length})`}
+            onClick={() => setActiveFilter("all")}
+          />
+        </div>
+
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(event) => setSearchQuery(event.target.value)}
+          placeholder="名前・内容・テーマで検索"
+          style={{
+            flex: "1 1 260px",
+            minWidth: "220px",
+            padding: "0.75rem 0.9rem",
+            borderRadius: "8px",
+            border: "1px solid rgba(255,255,255,0.15)",
+            backgroundColor: "rgba(255,255,255,0.04)",
+            color: "white",
+            outline: "none",
+          }}
+        />
+      </div>
+
       {messages.length === 0 ? (
         <p>メッセージはありません。</p>
+      ) : visibleMessages.length === 0 ? (
+        <p style={{ color: "var(--color-text-muted)" }}>
+          条件に合うメッセージはありません。検索条件またはフィルターを調整してください。
+        </p>
       ) : (
         <div
           style={{
@@ -461,7 +619,7 @@ export default function AdminPage() {
             gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
           }}
         >
-          {messages.map((message) => (
+          {visibleMessages.map((message) => (
             <div
               key={message.id}
               style={{
@@ -554,5 +712,70 @@ export default function AdminPage() {
         </div>
       )}
     </div>
+  );
+}
+
+function StatusCard({
+  label,
+  value,
+  accentColor,
+  description,
+}: {
+  label: string;
+  value: number;
+  accentColor: string;
+  description: string;
+}) {
+  return (
+    <div
+      style={{
+        padding: "1rem 1.1rem",
+        borderRadius: "10px",
+        backgroundColor: "rgba(255,255,255,0.04)",
+        border: "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
+      <p
+        style={{
+          color: "var(--color-text-muted)",
+          fontSize: "0.8rem",
+          marginBottom: "0.45rem",
+          letterSpacing: "0.08em",
+        }}
+      >
+        {label}
+      </p>
+      <p style={{ color: accentColor, fontSize: "1.8rem", fontWeight: "bold" }}>{value}</p>
+      <p style={{ color: "var(--color-text-muted)", fontSize: "0.85rem" }}>{description}</p>
+    </div>
+  );
+}
+
+function FilterButton({
+  active,
+  label,
+  onClick,
+}: {
+  active: boolean;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        padding: "0.55rem 0.9rem",
+        borderRadius: "999px",
+        border: active
+          ? "1px solid rgba(212, 175, 55, 0.6)"
+          : "1px solid rgba(255,255,255,0.12)",
+        backgroundColor: active ? "rgba(212, 175, 55, 0.16)" : "rgba(255,255,255,0.04)",
+        color: active ? "var(--color-accent-light)" : "var(--color-text-muted)",
+        cursor: "pointer",
+        fontSize: "0.9rem",
+      }}
+    >
+      {label}
+    </button>
   );
 }
