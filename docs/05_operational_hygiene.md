@@ -89,6 +89,7 @@ The following do not fit perfectly into one bucket, but matter enough to track d
 - Content ownership: who updates event text, dates, and links
 
 Use [docs/templates/adr.md](/Users/yutogasaki/Projects/sleeping-beauty/docs/templates/adr.md) when a decision should outlive the task that created it.
+Use [docs/operations/README.md](/Users/yutogasaki/Projects/sleeping-beauty/docs/operations/README.md) when the need is a lightweight operational note or runbook rather than a durable architectural fact.
 
 ## Guidance for Adding More Docs
 

@@ -66,6 +66,7 @@ Use [docs/templates/verification-checklist.md](/Users/yutogasaki/Projects/sleepi
 - Completed work summaries go in `docs/done/`
 - Durable facts go in `docs/memory/`
 - Architectural decisions go in `docs/adrs/`
+- Thin operational notes and runbooks go in `docs/operations/`
 - Reusable playbooks go in `docs/skills/`
 
 Do not store long progress logs in memory documents.
@@ -84,6 +85,7 @@ Do not store long progress logs in memory documents.
 - Done: `docs/done/YYYY-MM-DD-short-title.md`
 - Memory: `docs/memory/short-topic.md`
 - ADRs: `docs/adrs/NNNN-short-title.md`
+- Operations: `docs/operations/short-topic.md`
 - Skills: `docs/skills/short-workflow.md`
 
 ## Good Defaults For This Repo
