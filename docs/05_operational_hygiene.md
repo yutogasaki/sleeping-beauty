@@ -48,6 +48,17 @@ We should actively prevent knowledge layers from bloating.
 - Leaving outdated assumptions without verification dates
 - Turning templates into giant checklists nobody uses
 
+## Stale Memory Handling
+
+Durable memory is only useful if people can trust that it has not silently drifted.
+
+Use this lightweight rule:
+
+- Re-check memory when the current task depends on it.
+- Re-check it after incidents or changes that touch the same boundary.
+- If the entry is more than about 90 days old and still matters to the task, verify it before relying on it.
+- Refresh `Last Verified` when it still holds, and delete or trim it when it no longer earns its place.
+
 ## Downsides and Tradeoffs
 
 This operating model has costs.
