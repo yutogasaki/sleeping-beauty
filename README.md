@@ -23,12 +23,18 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 ## Project Docs
 
 - [Operating system](./docs/03_operating_system.md)
+- [Repo instructions](./AGENTS.md)
 - [Task template](./docs/templates/task.md)
 - [Done template](./docs/templates/done.md)
 - [Memory template](./docs/templates/memory-entry.md)
 - [Skill template](./docs/templates/skill.md)
 - [Verification checklist](./docs/templates/verification-checklist.md)
 - [ADR template](./docs/templates/adr.md)
+- [Tasks folder](./docs/tasks/README.md)
+- [Done folder](./docs/done/README.md)
+- [Memory folder](./docs/memory/README.md)
+- [ADRs folder](./docs/adrs/README.md)
+- [Skills folder](./docs/skills/README.md)
 
 ## Learn More
 
