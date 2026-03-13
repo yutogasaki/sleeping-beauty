@@ -46,6 +46,7 @@ Chat history is not a durable source of truth.
 
 For user-facing or operational changes, normally run:
 
+- `npm run test`
 - `npm run lint`
 - `npm run build`
 

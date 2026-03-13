@@ -155,6 +155,7 @@ Verification should be chosen deliberately, not copied blindly.
 Use this ladder:
 
 1. Static checks
+   - `npm run test`
    - `npm run lint`
    - `npm run build`
 2. Behavioral checks
