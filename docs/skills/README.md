@@ -17,7 +17,15 @@ Create a Skill when:
 - digital-ticket-updates
 - message-submission-hardening
 - admin-moderation-upgrades
+- route-testing
+- ui-polish-review
 - release-readiness-checks
+
+Current repo Skills:
+
+- `release-readiness-checks.md`
+- `route-testing.md`
+- `ui-polish-review.md`
 
 ## What a Skill should contain
 
