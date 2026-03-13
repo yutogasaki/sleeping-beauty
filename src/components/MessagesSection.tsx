@@ -3,6 +3,12 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import {
+    MESSAGE_COLOR_OPTIONS,
+    MESSAGE_LIMITS,
+    type MessageSubmissionInput,
+    validateMessageSubmission,
+} from "../lib/messageSubmission";
 import { supabase } from "../lib/supabaseClient";
 import { usePreview } from "../lib/PreviewContext";
 import { SAMPLE_MESSAGES } from "../lib/sampleData";
@@ -50,9 +56,20 @@ export default function MessagesSection() {
     const [activeId, setActiveId] = useState<string | null>(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+    const [formError, setFormError] = useState<string | null>(null);
+    const [showFieldErrors, setShowFieldErrors] = useState(false);
 
     // フォーム用ステート
-    const [formData, setFormData] = useState({ name: "", role: "", message: "", color: "yellow" });
+    const [formData, setFormData] = useState<MessageSubmissionInput>({
+        name: "",
+        role: "",
+        message: "",
+        color: "yellow",
+        website: "",
+    });
+    const formValidation = validateMessageSubmission(formData);
+    const fieldErrors = showFieldErrors ? formValidation.fieldErrors : {};
+    const isSubmitDisabled = formStatus === 'submitting' || !formValidation.ok;
 
     // 初期データの取得（プレビューモード・DB未接続・空の場合はサンプルデータを表示）
     useEffect(() => {
@@ -148,31 +165,51 @@ export default function MessagesSection() {
 
     const activeMessage = messages.find(m => m.id === activeId);
 
+    const handleOpenForm = () => {
+        setFormError(null);
+        setShowFieldErrors(false);
+        setIsFormOpen(true);
+    };
+
+    const handleCloseForm = () => {
+        setFormError(null);
+        setShowFieldErrors(false);
+        setIsFormOpen(false);
+    };
+
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setFormStatus('submitting');
+        setShowFieldErrors(true);
+        setFormError(null);
 
-        if (!supabase) {
-            alert("データベースに接続されていません。");
-            setFormStatus('idle');
+        if (!formValidation.ok) {
             return;
         }
 
-        const senderNameCombined = formData.role ? `${formData.name}（${formData.role}）` : formData.name;
+        setFormStatus('submitting');
 
-        const { error } = await supabase
-            .from('messages')
-            .insert([
-                {
-                    sender_name: senderNameCombined,
-                    content: formData.message,
-                    color_theme: formData.color
-                }
-            ]);
+        try {
+            const response = await fetch("/api/messages", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
 
-        if (error) {
-            console.error("Error inserting message:", error);
-            alert("エラーが発生しました。もう一度お試しください。");
+            const result = (await response.json().catch(() => null)) as {
+                accepted?: boolean;
+                message?: string;
+            } | null;
+
+            if (!response.ok || !result?.accepted) {
+                setFormError(result?.message ?? "エラーが発生しました。もう一度お試しください。");
+                setFormStatus('idle');
+                return;
+            }
+        } catch (error) {
+            console.error("Error submitting message:", error);
+            setFormError("通信に失敗しました。時間をおいて再度お試しください。");
             setFormStatus('idle');
             return;
         }
@@ -181,7 +218,9 @@ export default function MessagesSection() {
         setTimeout(() => {
             setIsFormOpen(false);
             setFormStatus('idle');
-            setFormData({ name: "", role: "", message: "", color: "yellow" });
+            setFormError(null);
+            setShowFieldErrors(false);
+            setFormData({ name: "", role: "", message: "", color: "yellow", website: "" });
         }, 3000);
     };
 
@@ -280,7 +319,7 @@ export default function MessagesSection() {
             </div>
 
             <div className="flex-center" style={{ marginTop: "2rem", zIndex: 10, position: "relative" }}>
-                <button className="btn-primary" onClick={() => setIsFormOpen(true)}>
+                <button className="btn-primary" onClick={handleOpenForm}>
                     意気込みを投稿する（生徒専用）
                 </button>
             </div>
@@ -371,7 +410,7 @@ export default function MessagesSection() {
                             justifyContent: "center",
                             padding: "1rem"
                         }}
-                        onClick={() => setIsFormOpen(false)}
+                        onClick={handleCloseForm}
                     >
                         <motion.div
                             initial={{ scale: 0.9, y: 20 }}
@@ -390,7 +429,7 @@ export default function MessagesSection() {
                             onClick={(e) => e.stopPropagation()}
                         >
                             <button
-                                onClick={() => setIsFormOpen(false)}
+                                onClick={handleCloseForm}
                                 style={{ position: "absolute", top: "15px", right: "20px", background: "none", border: "none", color: "var(--color-text-muted)", fontSize: "1.8rem", cursor: "pointer", padding: "5px" }}
                             >
                                 ×
@@ -410,39 +449,129 @@ export default function MessagesSection() {
                             ) : (
                                 <form onSubmit={handleFormSubmit}>
                                     <h4 style={{ color: "var(--color-accent)", marginBottom: "1.5rem", textAlign: "center", fontSize: "1.4rem" }}>意気込みを投稿する</h4>
+                                    <p style={{ color: "var(--color-text-muted)", fontSize: "0.85rem", marginBottom: "1.5rem", textAlign: "center", lineHeight: 1.6 }}>
+                                        承認後に森へ現れます。連続投稿を防ぐため、送信後は少し時間をおいて再投稿できます。
+                                    </p>
+
+                                    <input
+                                        type="text"
+                                        name="website"
+                                        autoComplete="off"
+                                        tabIndex={-1}
+                                        value={formData.website}
+                                        onChange={e => setFormData({ ...formData, website: e.target.value })}
+                                        style={{ position: "absolute", left: "-9999px", opacity: 0, pointerEvents: "none" }}
+                                        aria-hidden="true"
+                                    />
+
+                                    {formError && (
+                                        <p style={{ color: "#fda4af", fontSize: "0.9rem", marginBottom: "1rem", textAlign: "center" }}>
+                                            {formError}
+                                        </p>
+                                    )}
 
                                     <div style={{ marginBottom: "1.2rem" }}>
-                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>お名前（ニックネーム可）</label>
-                                        <input required type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", outline: "none" }} />
+                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
+                                            お名前（ニックネーム可）
+                                            <span style={{ float: "right" }}>{formData.name.length}/{MESSAGE_LIMITS.name}</span>
+                                        </label>
+                                        <input
+                                            required
+                                            type="text"
+                                            maxLength={MESSAGE_LIMITS.name}
+                                            value={formData.name}
+                                            onChange={e => setFormData({ ...formData, name: e.target.value })}
+                                            aria-invalid={Boolean(fieldErrors.name)}
+                                            style={{
+                                                width: "100%",
+                                                padding: "0.8rem",
+                                                borderRadius: "8px",
+                                                background: "rgba(255,255,255,0.05)",
+                                                border: fieldErrors.name ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
+                                                color: "white",
+                                                outline: "none"
+                                            }}
+                                        />
+                                        {fieldErrors.name && (
+                                            <p style={{ color: "#fda4af", fontSize: "0.8rem", marginTop: "0.4rem" }}>{fieldErrors.name}</p>
+                                        )}
                                     </div>
 
                                     <div style={{ marginBottom: "1.2rem" }}>
-                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>演目・配役など（任意）</label>
-                                        <input type="text" value={formData.role} onChange={e => setFormData({ ...formData, role: e.target.value })} placeholder="例：ワルツ、妖精など" style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", outline: "none" }} />
+                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
+                                            演目・配役など（任意）
+                                            <span style={{ float: "right" }}>{formData.role.length}/{MESSAGE_LIMITS.role}</span>
+                                        </label>
+                                        <input
+                                            type="text"
+                                            maxLength={MESSAGE_LIMITS.role}
+                                            value={formData.role}
+                                            onChange={e => setFormData({ ...formData, role: e.target.value })}
+                                            placeholder="例：ワルツ、妖精など"
+                                            aria-invalid={Boolean(fieldErrors.role)}
+                                            style={{
+                                                width: "100%",
+                                                padding: "0.8rem",
+                                                borderRadius: "8px",
+                                                background: "rgba(255,255,255,0.05)",
+                                                border: fieldErrors.role ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
+                                                color: "white",
+                                                outline: "none"
+                                            }}
+                                        />
+                                        {fieldErrors.role && (
+                                            <p style={{ color: "#fda4af", fontSize: "0.8rem", marginTop: "0.4rem" }}>{fieldErrors.role}</p>
+                                        )}
                                     </div>
 
                                     <div style={{ marginBottom: "1.2rem" }}>
                                         <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>光の粒の色</label>
                                         <div style={{ display: "flex", gap: "1rem" }}>
-                                            {['yellow', 'pink', 'blue', 'pure'].map(c => (
-                                                <label key={c} style={{ display: "flex", alignItems: "center", gap: "0.3rem", cursor: "pointer", color: "white", fontSize: "0.9rem" }}>
-                                                    <input type="radio" name="color" value={c} checked={formData.color === c} onChange={() => setFormData({ ...formData, color: c })} />
-                                                    {c === 'yellow' ? '黄金' : c === 'pink' ? '桜色' : c === 'blue' ? '蒼穹' : '純白'}
+                                            {MESSAGE_COLOR_OPTIONS.map(option => (
+                                                <label key={option.value} style={{ display: "flex", alignItems: "center", gap: "0.3rem", cursor: "pointer", color: "white", fontSize: "0.9rem" }}>
+                                                    <input type="radio" name="color" value={option.value} checked={formData.color === option.value} onChange={() => setFormData({ ...formData, color: option.value })} />
+                                                    {option.label}
                                                 </label>
                                             ))}
                                         </div>
+                                        {fieldErrors.color && (
+                                            <p style={{ color: "#fda4af", fontSize: "0.8rem", marginTop: "0.4rem" }}>{fieldErrors.color}</p>
+                                        )}
                                     </div>
 
                                     <div style={{ marginBottom: "2rem" }}>
-                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>意気込みメッセージ</label>
-                                        <textarea required rows={4} value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} style={{ width: "100%", padding: "0.8rem", borderRadius: "8px", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "white", resize: "none", outline: "none" }}></textarea>
+                                        <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>
+                                            意気込みメッセージ
+                                            <span style={{ float: "right" }}>{formData.message.length}/{MESSAGE_LIMITS.message}</span>
+                                        </label>
+                                        <textarea
+                                            required
+                                            rows={4}
+                                            maxLength={MESSAGE_LIMITS.message}
+                                            value={formData.message}
+                                            onChange={e => setFormData({ ...formData, message: e.target.value })}
+                                            aria-invalid={Boolean(fieldErrors.message)}
+                                            style={{
+                                                width: "100%",
+                                                padding: "0.8rem",
+                                                borderRadius: "8px",
+                                                background: "rgba(255,255,255,0.05)",
+                                                border: fieldErrors.message ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
+                                                color: "white",
+                                                resize: "none",
+                                                outline: "none"
+                                            }}
+                                        />
+                                        {fieldErrors.message && (
+                                            <p style={{ color: "#fda4af", fontSize: "0.8rem", marginTop: "0.4rem" }}>{fieldErrors.message}</p>
+                                        )}
                                     </div>
 
                                     <button
                                         type="submit"
                                         className="btn-primary"
                                         style={{ width: "100%", opacity: formStatus === 'submitting' ? 0.7 : 1 }}
-                                        disabled={formStatus === 'submitting'}
+                                        disabled={isSubmitDisabled}
                                     >
                                         {formStatus === 'submitting' ? '送信中...' : '光の粒を送る'}
                                     </button>
