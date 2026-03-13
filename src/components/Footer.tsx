@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { EVENT_DETAILS } from "../lib/eventDetails";
 
 export default function Footer() {
     return (
@@ -38,8 +39,8 @@ export default function Footer() {
                     <div style={{ color: "var(--color-text-muted)", fontSize: "0.95rem", lineHeight: 2 }}>
                         <p style={{ color: "var(--color-text)", fontWeight: "bold" }}>AYAMI BALLET STUDIO 第4回発表会</p>
                         <p>「眠れる森の美女」</p>
-                        <p>2026年8月23日（日）15:00 開演</p>
-                        <p>豊橋市芸術劇場PLAT 主ホール</p>
+                        <p>{EVENT_DETAILS.footerDateLabel} {EVENT_DETAILS.doorsOpenLabel} 開場 / {EVENT_DETAILS.startLabel} 開演</p>
+                        <p>{EVENT_DETAILS.venueName}</p>
                     </div>
                 </motion.div>
 
@@ -61,17 +62,17 @@ export default function Footer() {
                     </h4>
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
                         <a
-                            href="https://toyohashi-at.jp/"
+                            href={EVENT_DETAILS.accessUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{ color: "var(--color-text-muted)", fontSize: "0.95rem", textDecoration: "none", transition: "color 0.2s" }}
                             onMouseEnter={e => (e.currentTarget.style.color = "var(--color-accent)")}
                             onMouseLeave={e => (e.currentTarget.style.color = "var(--color-text-muted)")}
                         >
-                            → 豊橋市芸術劇場PLAT
+                            → {EVENT_DETAILS.venueLinkLabel}
                         </a>
                         <a
-                            href="https://ayami-ballet.com/"
+                            href={EVENT_DETAILS.studioUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{ color: "var(--color-text-muted)", fontSize: "0.95rem", textDecoration: "none", transition: "color 0.2s" }}
@@ -81,7 +82,7 @@ export default function Footer() {
                             → AYAMI BALLET STUDIO 公式サイト
                         </a>
                         <a
-                            href="https://www.instagram.com/ayami.ballet.studio/"
+                            href={EVENT_DETAILS.instagramUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{ color: "var(--color-text-muted)", fontSize: "0.95rem", textDecoration: "none", transition: "color 0.2s" }}

@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { EVENT_DETAILS } from "../lib/eventDetails";
 
-const TARGET_DATE = new Date("2026-08-23T15:00:00+09:00").getTime(); // 本番開演予定時刻
+const TARGET_DATE = EVENT_DETAILS.countdownTargetMs;
 
 export default function Countdown() {
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });

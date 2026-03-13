@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { EVENT_DETAILS } from "../lib/eventDetails";
 import TicketModal from "./TicketModal";
 
 export default function EventInfo() {
@@ -35,18 +36,18 @@ export default function EventInfo() {
                         {/* Date & Time */}
                         <div style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1.5rem" }}>
                             <h4 style={{ color: "var(--color-accent-light)", fontSize: "1.1rem", marginBottom: "0.5rem" }}>日時</h4>
-                            <p style={{ fontSize: "1.2rem" }}>2026年8月23日 (日)</p>
+                            <p style={{ fontSize: "1.2rem" }}>{EVENT_DETAILS.dateLabel}</p>
                             <p style={{ color: "var(--color-text-muted)", marginTop: "0.5rem" }}>
-                                15:00 開演（予定） / 17:00 終演（予定）
+                                {EVENT_DETAILS.doorsAndShowLabel}
                             </p>
                         </div>
 
                         {/* Location */}
                         <div style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1.5rem" }}>
                             <h4 style={{ color: "var(--color-accent-light)", fontSize: "1.1rem", marginBottom: "0.5rem" }}>場所</h4>
-                            <p style={{ fontSize: "1.2rem" }}>穂の国とよはし芸術劇場 PLAT 主ホール</p>
+                            <p style={{ fontSize: "1.2rem" }}>{EVENT_DETAILS.venueName}</p>
                             <a
-                                href="https://www.toyohashi-at.jp/"
+                                href={EVENT_DETAILS.accessUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{ color: "var(--color-accent)", fontSize: "0.9rem", textDecoration: "underline", display: "inline-block", marginTop: "0.5rem" }}
@@ -85,11 +86,11 @@ export default function EventInfo() {
                                 className="btn-primary"
                                 style={{ display: "inline-block", fontSize: "0.9rem", padding: "0.75rem 2rem", marginBottom: "1rem" }}
                             >
-                                デジタルチケットを表示
+                                来場用デジタルチケット
                             </button>
                             <br />
                             <a
-                                href="https://ayami-ballet.com/"
+                                href={EVENT_DETAILS.studioUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", textDecoration: "underline" }}
