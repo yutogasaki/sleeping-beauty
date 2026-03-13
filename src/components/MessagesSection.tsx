@@ -17,9 +17,36 @@ type MessageData = {
     scale?: number;
 };
 
+type DisplayMessage = MessageData & {
+    x: number;
+    y: number;
+    scale: number;
+    revealDelay: number;
+    floatDuration: number;
+    floatOffset: number;
+    rotateAmplitude: number;
+};
+
+function createDisplayMessage(message: MessageData): DisplayMessage {
+    return {
+        ...message,
+        x: message.x ?? 10 + Math.random() * 80,
+        y: message.y ?? 20 + Math.random() * 60,
+        scale: message.scale ?? 0.7 + Math.random() * 0.6,
+        revealDelay: Math.random() * 0.5,
+        floatDuration: 3 + Math.random() * 2,
+        floatOffset: -10 - Math.random() * 12,
+        rotateAmplitude: 2 + Math.random() * 4,
+    };
+}
+
+function toDisplayMessages(messages: MessageData[]) {
+    return messages.map(createDisplayMessage);
+}
+
 export default function MessagesSection() {
     const isPreview = usePreview();
-    const [messages, setMessages] = useState<MessageData[]>([]);
+    const [messages, setMessages] = useState<DisplayMessage[]>([]);
     const [activeId, setActiveId] = useState<string | null>(null);
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
@@ -29,13 +56,19 @@ export default function MessagesSection() {
 
     // 初期データの取得（プレビューモード・DB未接続・空の場合はサンプルデータを表示）
     useEffect(() => {
-        if (isPreview) {
-            setMessages(SAMPLE_MESSAGES);
-            return;
-        }
+        let isActive = true;
+
         const fetchMessages = async () => {
+            if (isPreview) {
+                if (isActive) {
+                    setMessages(toDisplayMessages(SAMPLE_MESSAGES));
+                }
+                return;
+            }
             if (!supabase) {
-                setMessages(SAMPLE_MESSAGES);
+                if (isActive) {
+                    setMessages(toDisplayMessages(SAMPLE_MESSAGES));
+                }
                 return;
             }
             const { data, error } = await supabase
@@ -46,20 +79,25 @@ export default function MessagesSection() {
 
             if (error) {
                 console.error("Error fetching messages:", error);
-                setMessages(SAMPLE_MESSAGES);
+                if (isActive) {
+                    setMessages(toDisplayMessages(SAMPLE_MESSAGES));
+                }
             } else if (data && data.length > 0) {
-                const messagesWithPositions = data.map(msg => ({
-                    ...msg,
-                    x: 10 + Math.random() * 80,
-                    y: 20 + Math.random() * 60,
-                    scale: 0.7 + Math.random() * 0.6
-                }));
-                setMessages(messagesWithPositions);
+                if (isActive) {
+                    setMessages(toDisplayMessages(data));
+                }
             } else {
-                setMessages(SAMPLE_MESSAGES);
+                if (isActive) {
+                    setMessages(toDisplayMessages(SAMPLE_MESSAGES));
+                }
             }
         };
-        fetchMessages();
+
+        void fetchMessages();
+
+        return () => {
+            isActive = false;
+        };
     }, [isPreview]);
 
     // リアルタイム更新：承認されたメッセージが自動で光の粒として出現
@@ -73,12 +111,7 @@ export default function MessagesSection() {
                 (payload) => {
                     const newMsg = payload.new as MessageData & { is_approved?: boolean };
                     if (newMsg.is_approved) {
-                        setMessages(prev => [...prev, {
-                            ...newMsg,
-                            x: 10 + Math.random() * 80,
-                            y: 20 + Math.random() * 60,
-                            scale: 0.7 + Math.random() * 0.6,
-                        }]);
+                        setMessages(prev => [...prev, createDisplayMessage(newMsg)]);
                     }
                 }
             )
@@ -91,12 +124,7 @@ export default function MessagesSection() {
                         setMessages(prev => {
                             const exists = prev.some(m => m.id === updated.id);
                             if (exists) return prev;
-                            return [...prev, {
-                                ...updated,
-                                x: 10 + Math.random() * 80,
-                                y: 20 + Math.random() * 60,
-                                scale: 0.7 + Math.random() * 0.6,
-                            }];
+                            return [...prev, createDisplayMessage(updated)];
                         });
                     } else {
                         // 非承認にされた → リストから削除
@@ -189,11 +217,6 @@ export default function MessagesSection() {
             <div style={{ position: "relative", width: "100%", height: "60vh", maxWidth: "1000px", margin: "0 auto" }}>
                 {messages.map((msg) => {
                     const isActive = activeId === msg.id;
-                    const duration = 4 + Math.random() * 6; // 4 to 10 seconds for more natural slow movement
-                    const delay = Math.random() * 3;
-                    const xMovement = (Math.random() - 0.5) * 40; // Reduced erratic movement
-                    const yMovement = -30 - Math.random() * 40; // Slowly float upwards
-                    const size = 60; // Base size for the particle
 
                     return (
                         <motion.div
@@ -208,19 +231,19 @@ export default function MessagesSection() {
                             initial={{ opacity: 0, scale: 0 }}
                             whileInView={{ opacity: 1, scale: msg.scale }}
                             viewport={{ once: true }}
-                            transition={{ delay: Math.random() * 0.5, duration: 1 }}
+                            transition={{ delay: msg.revealDelay, duration: 1 }}
                             onClick={() => setActiveId(isActive ? null : msg.id)}
                         >
                             {/* Particle Sparkle */}
                             <motion.div
                                 animate={{
-                                    y: [0, -15, 0],
+                                    y: [0, msg.floatOffset, 0],
                                     opacity: [0.6, 1, 0.6],
                                     scale: [1, 1.1, 1],
-                                    rotate: [0, 5, -5, 0],
+                                    rotate: [0, msg.rotateAmplitude, -msg.rotateAmplitude, 0],
                                 }}
                                 transition={{
-                                    duration: 3 + Math.random() * 2,
+                                    duration: msg.floatDuration,
                                     repeat: Infinity,
                                     ease: "easeInOut",
                                 }}
@@ -320,7 +343,7 @@ export default function MessagesSection() {
                                 ×
                             </button>
                             <p style={{ fontSize: "1.2rem", color: "var(--color-text)", marginBottom: "2rem", fontFamily: "var(--font-heading)", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>
-                                "{activeMessage.content}"
+                                「{activeMessage.content}」
                             </p>
                             <div style={{ color: "var(--color-accent)" }}>
                                 <span style={{ fontWeight: "bold", fontSize: "1.1rem" }}>{activeMessage.sender_name}</span>

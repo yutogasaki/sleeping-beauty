@@ -2,7 +2,6 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import Image from "next/image";
 
 type GiftType = {
     id: string;
@@ -13,25 +12,46 @@ type GiftType = {
     icon: string;
 };
 
+type SuccessParticle = {
+    id: number;
+    scale: number;
+    x: number;
+    y: number;
+    duration: number;
+};
+
 const gifts: GiftType[] = [
     { id: "ruby", name: "ルビーの祝福", price: "¥1,000", description: "あたたかな応援の気持ちを贈ります", color: "#E0115F", icon: "💎" },
     { id: "sapphire", name: "サファイアの祈り", price: "¥3,000", description: "舞台の成功を願う深い祈りを贈ります", color: "#0F52BA", icon: "💠" },
     { id: "rose", name: "魔法のバラ", price: "¥5,000", description: "最高級の賛辞と永遠の魔法を贈ります", color: "#FF007F", icon: "🌹" },
 ];
 
+function createSuccessParticles() {
+    return Array.from({ length: 20 }, (_, index): SuccessParticle => ({
+        id: index,
+        scale: Math.random() * 1 + 0.5,
+        x: (Math.random() - 0.5) * 400,
+        y: (Math.random() - 0.5) * 400 - 200,
+        duration: 1.5 + Math.random() * 1,
+    }));
+}
+
 export default function GiftSection() {
     const [selectedGift, setSelectedGift] = useState<GiftType | null>(null);
     const [isProcessing, setIsProcessing] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [successParticles, setSuccessParticles] = useState<SuccessParticle[]>([]);
 
     const handleSendGift = () => {
         setIsProcessing(true);
         // モック決済処理（2秒後に成功）
         setTimeout(() => {
             setIsProcessing(false);
+            setSuccessParticles(createSuccessParticles());
             setIsSuccess(true);
             setTimeout(() => {
                 setIsSuccess(false);
+                setSuccessParticles([]);
                 setSelectedGift(null);
             }, 3500); // 成功画面を3.5秒表示
         }, 2000);
@@ -175,22 +195,22 @@ export default function GiftSection() {
                         </motion.p>
 
                         {/* Particle Effects for success */}
-                        {[...Array(20)].map((_, i) => (
+                        {successParticles.map((particle) => (
                             <motion.div
-                                key={i}
+                                key={particle.id}
                                 initial={{
                                     opacity: 1,
                                     x: 0,
                                     y: 0,
-                                    scale: Math.random() * 1 + 0.5
+                                    scale: particle.scale
                                 }}
                                 animate={{
                                     opacity: 0,
-                                    x: (Math.random() - 0.5) * 400,
-                                    y: (Math.random() - 0.5) * 400 - 200,
+                                    x: particle.x,
+                                    y: particle.y,
                                 }}
                                 transition={{
-                                    duration: 1.5 + Math.random() * 1,
+                                    duration: particle.duration,
                                     ease: "easeOut",
                                     delay: 0.2
                                 }}

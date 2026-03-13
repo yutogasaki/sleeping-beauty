@@ -8,7 +8,11 @@ export default function EventInfo() {
     const [isTicketOpen, setIsTicketOpen] = useState(false);
 
     return (
-        <section className="section-padding flex-center" style={{ backgroundColor: "var(--color-primary)", position: "relative", zIndex: 10 }}>
+        <section
+            id="event-info"
+            className="section-padding flex-center"
+            style={{ backgroundColor: "var(--color-primary)", position: "relative", zIndex: 10, scrollMarginTop: "2rem" }}
+        >
             <div className="container" style={{ width: "100%", maxWidth: "800px" }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

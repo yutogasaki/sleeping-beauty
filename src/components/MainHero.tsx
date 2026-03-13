@@ -26,6 +26,13 @@ export default function MainHero() {
     const yFgAurora = useTransform(scrollY, [0, 800], [0, -300]);
     const yFgCorps = useTransform(scrollY, [0, 800], [0, -200]);
 
+    const handleOpenKingdom = () => {
+        document.getElementById("event-info")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+        });
+    };
+
     return (
         <section className="hero-section" style={{ position: "relative", height: "100dvh", overflow: "hidden", display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
@@ -79,7 +86,12 @@ export default function MainHero() {
                         特別な一日。
                     </p>
 
-                    <button className="btn-primary" style={{ padding: "1rem 3rem", fontSize: "1.2rem" }}>
+                    <button
+                        type="button"
+                        className="btn-primary"
+                        style={{ padding: "1rem 3rem", fontSize: "1.2rem" }}
+                        onClick={handleOpenKingdom}
+                    >
                         王国の扉を開く
                     </button>
                 </div>
