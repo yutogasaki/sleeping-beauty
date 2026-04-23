@@ -28,7 +28,7 @@ export default function HomeContent() {
                         right: 0,
                         zIndex: 9999,
                         backgroundColor: "rgba(var(--color-accent-rgb), 0.92)",
-                        color: "var(--color-primary)",
+                        color: "var(--color-primary-dark)",
                         textAlign: "center",
                         padding: "0.3rem",
                         fontSize: "0.8rem",

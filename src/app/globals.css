@@ -2,31 +2,28 @@
 
 :root {
   /* Color Palette */
-  --color-primary: #6b3e35;
-  --color-primary-rgb: 107, 62, 53;
-  --color-primary-light: #aab28f;
-  --color-primary-light-rgb: 170, 178, 143;
-  --color-primary-dark: #4f312a;
-  --color-primary-dark-rgb: 79, 49, 42;
+  --color-primary: #0e1826;
+  --color-primary-rgb: 14, 24, 38;
+  --color-primary-light: #27415d;
+  --color-primary-light-rgb: 39, 65, 93;
+  --color-primary-dark: #050a10;
+  --color-primary-dark-rgb: 5, 10, 16;
 
-  --color-accent: #c7a882;
-  --color-accent-rgb: 199, 168, 130;
-  --color-accent-light: #f3ece1;
-  --color-accent-light-rgb: 243, 236, 225;
-  --color-accent-glow: rgba(var(--color-accent-rgb), 0.35);
+  --color-accent: #c19a3b;
+  --color-accent-rgb: 193, 154, 59;
+  --color-accent-light: #f1e6c6;
+  --color-accent-light-rgb: 241, 230, 198;
+  --color-accent-glow: rgba(var(--color-accent-rgb), 0.3);
 
-  --color-text: #f3ece1;
-  --color-text-rgb: 243, 236, 225;
-  --color-text-muted: #e6c4bb;
-  --color-text-muted-rgb: 230, 196, 187;
-  --color-blush: #e6c4bb;
-  --color-blush-rgb: 230, 196, 187;
-  --color-rose: #b96b6f;
-  --color-rose-rgb: 185, 107, 111;
+  --color-text: #e9ecef;
+  --color-text-rgb: 233, 236, 239;
+  --color-text-muted: #a7b4c2;
+  --color-text-muted-rgb: 167, 180, 194;
 
-  --color-background: #f3ece1;
-  --color-background-rgb: 243, 236, 225;
-  --color-surface: rgba(var(--color-primary-rgb), 0.78);
+  --color-background: #0e1826;
+  --color-background-rgb: 14, 24, 38;
+  --color-surface: #1b2938;
+  --color-surface-rgb: 27, 41, 56;
   
   /* Fonts */
   --font-heading: 'Shippori Mincho', serif;
@@ -72,14 +69,16 @@ a {
 
 /* Glassmorphism Classes */
 .glass-panel {
-  background: var(--color-surface);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(var(--color-accent-light-rgb), 0.12);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--color-surface-rgb), 0.96) 0%,
+    rgba(var(--color-surface-rgb), 0.99) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
   box-shadow:
-    0 18px 40px rgba(var(--color-primary-dark-rgb), 0.18),
-    inset 0 1px 0 rgba(var(--color-accent-light-rgb), 0.08);
+    0 18px 40px rgba(var(--color-primary-dark-rgb), 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 /* Text Gradients */
@@ -97,28 +96,129 @@ a {
 
 .hero-poster-stage {
   position: relative;
-  min-height: 100dvh;
+  height: min(100dvh, calc(100vw * 941 / 1672));
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at top left, rgba(var(--color-blush-rgb), 0.22) 0%, transparent 34%),
-    radial-gradient(circle at top right, rgba(var(--color-primary-light-rgb), 0.18) 0%, transparent 32%),
-    linear-gradient(180deg, #f3ece1 0%, #efe5d8 100%);
+  overflow: clip;
+  isolation: isolate;
+  background: var(--color-primary-dark);
 }
 
-.hero-poster-frame {
-  position: relative;
-  max-width: 1672px;
-  aspect-ratio: 1672 / 941;
-  box-shadow: 0 18px 42px rgba(107, 62, 53, 0.12);
-  border: 1px solid rgba(107, 62, 53, 0.08);
+.hero-poster-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background: none;
+}
+
+.hero-poster-stage::after {
+  content: "";
+  position: absolute;
+  left: clamp(1rem, 4vw, 3rem);
+  right: clamp(1rem, 4vw, 3rem);
+  bottom: 0;
+  height: 1px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--color-accent-rgb), 0.1) 10%,
+    rgba(var(--color-accent-rgb), 0.38) 22%,
+    rgba(var(--color-accent-rgb), 0.2) 50%,
+    rgba(var(--color-accent-rgb), 0.38) 78%,
+    rgba(var(--color-accent-rgb), 0.1) 90%,
+    transparent 100%
+  );
+}
+
+.hero-poster-bg,
+.hero-poster-mobile {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background-image: url("/images/sleeping-beauty-hero-poster.png");
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+
+.hero-poster-bg {
+  background-position: center top;
+  background-size: cover;
+  filter: none;
+  transform: none;
 }
 
 .hero-poster-mobile {
   display: none;
+}
+
+.prologue-section {
+  min-height: 96vh;
+  margin-top: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--color-primary-rgb), 0.98) 0%,
+    rgba(var(--color-surface-rgb), 0.98) 100%
+  );
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(3.5rem, 8vw, 6rem) 2rem 5rem;
+  overflow: hidden;
+  border-top: 1px solid rgba(var(--color-accent-rgb), 0.16);
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  z-index: 5;
+  box-shadow: 0 -12px 28px rgba(var(--color-primary-dark-rgb), 0.08);
+}
+
+.prologue-scrim {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    ellipse at center,
+    rgba(var(--color-primary-rgb), 0) 0%,
+    rgba(var(--color-surface-rgb), 0.92) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.prologue-inner {
+  position: sticky;
+  top: clamp(3rem, 9vh, 5.5rem);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  z-index: 2;
+}
+
+.prologue-block-secondary {
+  top: clamp(14rem, 32vw, 17rem);
+}
+
+.prologue-block-final {
+  top: clamp(23rem, 48vw, 28rem);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Base button */
@@ -144,11 +244,11 @@ a {
 
 @media (max-width: 767px) {
   .hero-poster-stage {
+    min-height: clamp(260px, calc(100vw * 0.72), 320px);
     padding: 0;
-    background: var(--color-accent-light);
   }
 
-  .hero-poster-frame {
+  .hero-poster-bg {
     display: none;
   }
 
@@ -156,6 +256,46 @@ a {
     display: block;
     position: absolute;
     inset: 0;
+    background-position: center top;
+    background-size: contain;
+    filter: none;
+    transform: none;
+  }
+
+  .hero-poster-stage::before {
+    background: none;
+  }
+
+  .prologue-section {
+    min-height: 88vh;
+    margin-top: 0;
+    padding: 2.75rem 1.5rem 4rem;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: none;
+  }
+
+  .prologue-inner {
+    top: 2.75rem;
+  }
+
+  .prologue-block-secondary {
+    top: 18rem;
+  }
+
+  .prologue-block-final {
+    top: 31rem;
+  }
+}
+
+@media (min-aspect-ratio: 1672/941) {
+  .hero-poster-stage {
+    background: #f3eadf;
+  }
+
+  .hero-poster-bg {
+    background-size: contain;
+    transform: none;
   }
 }
 
