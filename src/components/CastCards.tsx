@@ -44,6 +44,14 @@ const castData: CastType[] = [
         description: "物語の運命を動かす闇の妖精。姫に呪いをかけ、百年の眠りへと導く重要な役どころ。",
         color: "#5C4033", // ダークブラウン/ブラック系
         icon: "🥀"
+    },
+    {
+        id: "bluebird",
+        role: "青い鳥",
+        name: "南野 高廣",
+        description: "フロリナ姫とともに祝宴を彩る、軽やかで華やかな青い翼の役どころ。",
+        color: "#7EA6E0",
+        icon: "🕊️"
     }
 ];
 

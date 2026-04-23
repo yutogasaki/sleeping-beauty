@@ -11,6 +11,7 @@ Small event-content changes can affect the page, metadata, ticket modal, and cal
 ## Source of Truth
 
 - Shared event metadata: [src/lib/eventDetails.ts](/Users/yutogasaki/Projects/sleeping-beauty/src/lib/eventDetails.ts)
+- Shared guest artist copy: [src/lib/guestArtists.ts](/Users/yutogasaki/Projects/sleeping-beauty/src/lib/guestArtists.ts)
 - Shared program chapter copy: [src/lib/programDetails.ts](/Users/yutogasaki/Projects/sleeping-beauty/src/lib/programDetails.ts)
 - Calendar file generation: [src/app/api/calendar/route.ts](/Users/yutogasaki/Projects/sleeping-beauty/src/app/api/calendar/route.ts)
 - Shared metadata checks: [src/lib/eventDetails.test.ts](/Users/yutogasaki/Projects/sleeping-beauty/src/lib/eventDetails.test.ts)
@@ -26,6 +27,7 @@ Open this note when changing any of the following:
 - calendar description, file name, or time zone
 - ticket-facing date, pass code, or access CTA
 - page copy that must stay aligned with the event details above
+- guest artist names or affiliations
 - shared chapter labels or program-card summary copy
 
 ## What To Check or Do
@@ -37,6 +39,9 @@ Open this note when changing any of the following:
   - countdown target
   - calendar metadata
   - ticket pass code
+- Update [src/lib/guestArtists.ts](/Users/yutogasaki/Projects/sleeping-beauty/src/lib/guestArtists.ts) first when the change affects shared guest content:
+  - guest names
+  - guest affiliations
 - Update [src/lib/programDetails.ts](/Users/yutogasaki/Projects/sleeping-beauty/src/lib/programDetails.ts) first when the change affects shared program-card copy:
   - chapter labels
   - chapter titles
@@ -49,12 +54,15 @@ Open this note when changing any of the following:
   - [src/components/TicketModal.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/components/TicketModal.tsx)
   - [src/app/layout.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/app/layout.tsx)
   - [src/app/api/calendar/route.ts](/Users/yutogasaki/Projects/sleeping-beauty/src/app/api/calendar/route.ts)
+- After changing shared guest artist copy, review the main consumers:
+  - [src/components/EventInfo.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/components/EventInfo.tsx)
 - After changing shared program-card copy, review the main consumers:
   - [src/components/ProgramCarousel.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/components/ProgramCarousel.tsx)
   - [src/components/EventInfo.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/components/EventInfo.tsx)
 - Some presentation content is still component-local and will not update automatically from `EVENT_DETAILS`. Check these areas explicitly when the event or program changes:
   - hero title and hero tagline in [src/components/MainHero.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/components/MainHero.tsx)
   - footer title strings in [src/components/Footer.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/components/Footer.tsx)
+  - cast role cards in [src/components/CastCards.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/components/CastCards.tsx)
 - If the change is a reschedule or venue move, update all time-related fields together:
   - `dateLabel`
   - `footerDateLabel`
@@ -83,6 +91,7 @@ Open this note when changing any of the following:
 - Calendar download or Google Calendar link containing stale title, venue, or time-zone data
 - Venue or studio links pointing to the wrong destination
 - Footer or hero strings drifting from the shared event metadata because they remain component-local
+- Guest artist names drifting between assets and the public event-info section
 - Program summary copy drifting between the detailed card section and the event-info summary
 
 Helpful current safeguards:

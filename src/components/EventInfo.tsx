@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { EVENT_DETAILS } from "../lib/eventDetails";
+import { GUEST_ARTISTS } from "../lib/guestArtists";
 import { PROGRAM_CHAPTERS, PROGRAM_NOTE } from "../lib/programDetails";
 import TicketModal from "./TicketModal";
 
@@ -13,9 +14,9 @@ export default function EventInfo() {
         <section
             id="event-info"
             className="section-padding flex-center"
-            style={{ backgroundColor: "var(--color-primary)", position: "relative", zIndex: 10, scrollMarginTop: "2rem" }}
+            style={{ backgroundColor: "var(--color-primary-dark)", position: "relative", zIndex: 10, scrollMarginTop: "2rem" }}
         >
-            <div className="container" style={{ width: "100%", maxWidth: "800px" }}>
+            <div className="container" style={{ width: "100%", maxWidth: "960px" }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -55,6 +56,44 @@ export default function EventInfo() {
                             >
                                 会場アクセスはこちら
                             </a>
+                        </div>
+
+                        {/* Guests */}
+                        <div style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1.5rem" }}>
+                            <h4 style={{ color: "var(--color-accent-light)", fontSize: "1.1rem", marginBottom: "1rem" }}>ゲスト</h4>
+                            <div
+                                style={{
+                                    display: "grid",
+                                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+                                    gap: "1rem",
+                                }}
+                            >
+                                {GUEST_ARTISTS.map((guest) => (
+                                    <div
+                                        key={guest.id}
+                                        className="glass-panel"
+                                        style={{
+                                            padding: "1.25rem 1rem",
+                                            minHeight: "132px",
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            justifyContent: "space-between",
+                                            borderColor: "rgba(var(--color-accent-rgb), 0.2)",
+                                            background: "linear-gradient(180deg, rgba(var(--color-surface-rgb), 0.9) 0%, rgba(var(--color-primary-rgb), 0.72) 100%)",
+                                        }}
+                                    >
+                                        <p style={{ color: "var(--color-accent)", fontSize: "0.78rem", letterSpacing: "0.14em", marginBottom: "0.8rem" }}>
+                                            GUEST
+                                        </p>
+                                        <p style={{ color: "var(--color-text)", fontSize: "1.15rem", fontFamily: "var(--font-heading)", marginBottom: "0.55rem" }}>
+                                            {guest.name}
+                                        </p>
+                                        <p style={{ color: "var(--color-text-muted)", fontSize: "0.82rem", lineHeight: 1.7 }}>
+                                            {guest.affiliation}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
                         {/* Program */}
