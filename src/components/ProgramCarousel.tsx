@@ -2,46 +2,10 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { PROGRAM_CHAPTERS, PROGRAM_NOTE } from "../lib/programDetails";
 
-type ProgramItem = {
-    id: string;
-    part: string;
-    title: string;
-    performers?: string;
-};
-
-const programData: ProgramItem[] = [
-    {
-        id: "p1",
-        part: "第一部: クラシックバレエ小品集",
-        title: "ドン・キホーテよりグラン・パ・ド・ドゥ",
-        performers: "ゲスト、生徒一同"
-    },
-    {
-        id: "p2",
-        part: "第二部: オリジナル作品",
-        title: "オリエンタル、ファンタジーミックス",
-        performers: "ゲスト、生徒一同"
-    },
-    {
-        id: "p3",
-        part: "第三部: 眠れる森の美女",
-        title: "第1幕: オーロラ姫の16歳の誕生日",
-        performers: "オーロラ姫、求婚者たち、カラボス"
-    },
-    {
-        id: "p4",
-        part: "第三部: 眠れる森の美女",
-        title: "第2幕: 100年後の森〜呪いの解放",
-        performers: "デジレ王子、リラの精、オーロラ姫"
-    },
-    {
-        id: "p5",
-        part: "第三部: 眠れる森の美女",
-        title: "第3幕: 華麗なる結婚式",
-        performers: "全キャスト"
-    }
-];
+const CARD_WIDTH = 300;
+const CARD_GAP = 32;
 
 export default function ProgramCarousel() {
     const targetRef = useRef<HTMLDivElement>(null);
@@ -49,31 +13,40 @@ export default function ProgramCarousel() {
         target: targetRef,
     });
 
-    const x = useTransform(scrollYProgress, [0, 1], ["0%", "-70%"]); // データ数に応じて調整
+    const x = useTransform(
+        scrollYProgress,
+        [0, 1],
+        [0, -((CARD_WIDTH + CARD_GAP) * (PROGRAM_CHAPTERS.length - 1))]
+    );
 
     return (
         <section
+            id="program"
             ref={targetRef}
+            className="section-padding"
             style={{
-                height: "300vh", // スクロール領域を確保
+                height: `${120 + PROGRAM_CHAPTERS.length * 40}vh`,
                 backgroundColor: "var(--color-primary)",
+                position: "relative",
+                zIndex: 10,
+                scrollMarginTop: "2rem",
                 borderTop: "1px solid rgba(var(--color-accent-rgb), 0.24)",
                 borderBottom: "1px solid rgba(var(--color-accent-rgb), 0.24)",
             }}
         >
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
-
-                {/* Section Title Container */}
-                <div style={{
-                    position: "absolute",
-                    top: "15%",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    textAlign: "center",
-                    zIndex: 10,
-                    width: "100%",
-                    pointerEvents: "none"
-                }}>
+                <div
+                    style={{
+                        position: "absolute",
+                        top: "15%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        textAlign: "center",
+                        zIndex: 10,
+                        width: "100%",
+                        pointerEvents: "none",
+                    }}
+                >
                     <h3 style={{ color: "var(--color-accent)", fontSize: "2rem", marginBottom: "0.5rem", fontFamily: "var(--font-heading)" }}>
                         プログラム
                     </h3>
@@ -83,15 +56,21 @@ export default function ProgramCarousel() {
                 </div>
 
                 <motion.div
-                    style={{ x, display: "flex", gap: "2rem", paddingLeft: "max(10vw, calc(50vw - 150px))", paddingRight: "50vw" }}
+                    style={{
+                        x,
+                        display: "flex",
+                        gap: `${CARD_GAP}px`,
+                        paddingLeft: `max(10vw, calc(50vw - ${CARD_WIDTH / 2}px))`,
+                        paddingRight: "50vw",
+                    }}
                 >
-                    {programData.map((item, index) => (
-                        <div
-                            key={item.id}
+                    {PROGRAM_CHAPTERS.map((chapter, index) => (
+                        <article
+                            key={chapter.id}
                             className="glass-panel"
                             style={{
                                 flexShrink: 0,
-                                width: "300px",
+                                width: `${CARD_WIDTH}px`,
                                 height: "450px",
                                 padding: "3rem 2rem",
                                 display: "flex",
@@ -100,46 +79,104 @@ export default function ProgramCarousel() {
                                 alignItems: "center",
                                 textAlign: "center",
                                 position: "relative",
-                                overflow: "hidden"
+                                overflow: "hidden",
+                                borderColor: chapter.featured
+                                    ? "rgba(var(--color-accent-rgb), 0.34)"
+                                    : undefined,
+                                background: chapter.featured
+                                    ? "linear-gradient(180deg, rgba(var(--color-surface-rgb), 0.98) 0%, rgba(var(--color-accent-rgb), 0.12) 100%)"
+                                    : undefined,
                             }}
                         >
-                            {/* ブックマーク/ページ番号的要素 */}
-                            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "10px", backgroundColor: "var(--color-accent)", opacity: 0.5 }} />
-                            <div style={{ position: "absolute", top: "1.5rem", color: "rgba(var(--color-accent-rgb), 0.34)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    height: "10px",
+                                    backgroundColor: chapter.featured
+                                        ? "rgba(var(--color-accent-rgb), 0.9)"
+                                        : "var(--color-accent)",
+                                    opacity: 0.5,
+                                }}
+                            />
+                            <div
+                                style={{
+                                    position: "absolute",
+                                    top: "1.5rem",
+                                    color: "rgba(var(--color-accent-rgb), 0.34)",
+                                    fontSize: "0.8rem",
+                                    letterSpacing: "0.2em",
+                                }}
+                            >
                                 PAGE 0{index + 1}
                             </div>
 
-                            <p style={{ color: "var(--color-accent)", fontSize: "0.8rem", letterSpacing: "0.15em", marginBottom: "2rem" }}>
-                                {item.part}
+                            <p
+                                style={{
+                                    color: chapter.featured ? "var(--color-accent-light)" : "var(--color-accent)",
+                                    fontSize: "0.8rem",
+                                    letterSpacing: "0.15em",
+                                    marginBottom: "2rem",
+                                }}
+                            >
+                                {chapter.chapterLabel}
                             </p>
 
-                            <h4 style={{ color: "var(--color-text)", fontSize: "1.4rem", fontFamily: "var(--font-heading)", lineHeight: 1.5, marginBottom: "2rem" }}>
-                                {item.title}
+                            <h4
+                                style={{
+                                    color: chapter.featured ? "var(--color-accent-light)" : "var(--color-text)",
+                                    fontSize: "1.5rem",
+                                    fontFamily: "var(--font-heading)",
+                                    lineHeight: 1.5,
+                                    marginBottom: "2rem",
+                                }}
+                            >
+                                {chapter.title}
                             </h4>
 
-                            {item.performers && (
-                                <>
-                                    <div style={{ width: "20px", height: "1px", backgroundColor: "rgba(255,255,255,0.2)", margin: "0 auto 2rem" }} />
+                            <div style={{ width: "20px", height: "1px", backgroundColor: "rgba(255,255,255,0.2)", margin: "0 auto 2rem" }} />
 
-                                    <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", lineHeight: 1.6 }}>
-                                        <span style={{ display: "block", fontSize: "0.7rem", marginBottom: "0.5rem", opacity: 0.7 }}>出演</span>
-                                        {item.performers}
-                                    </p>
-                                </>
-                            )}
-                        </div>
+                            <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", lineHeight: 1.8 }}>
+                                {chapter.summary}
+                            </p>
+                        </article>
                     ))}
                 </motion.div>
 
-                {/* スクロールガイド */}
-                <div style={{
-                    position: "absolute", bottom: "10%", left: "50%", transform: "translateX(-50%)",
-                    display: "flex", alignItems: "center", gap: "10px", opacity: 0.5, pointerEvents: "none"
-                }}>
+                <div
+                    style={{
+                        position: "absolute",
+                        bottom: "10%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "10px",
+                        opacity: 0.5,
+                        pointerEvents: "none",
+                    }}
+                >
                     <span style={{ color: "var(--color-text-muted)", fontSize: "0.8rem" }}>SCROLL</span>
                     <div style={{ width: "40px", height: "1px", backgroundColor: "var(--color-text-muted)" }} />
                     <span style={{ fontSize: "1.2rem", transform: "rotate(-90deg)", color: "var(--color-text-muted)" }}>▼</span>
                 </div>
+
+                <p
+                    style={{
+                        position: "absolute",
+                        bottom: "4.5%",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        color: "var(--color-text-muted)",
+                        fontSize: "0.82rem",
+                        textAlign: "center",
+                        pointerEvents: "none",
+                    }}
+                >
+                    {PROGRAM_NOTE}
+                </p>
             </div>
         </section>
     );

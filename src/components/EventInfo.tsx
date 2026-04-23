@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { EVENT_DETAILS } from "../lib/eventDetails";
+import { PROGRAM_CHAPTERS, PROGRAM_NOTE } from "../lib/programDetails";
 import TicketModal from "./TicketModal";
 
 export default function EventInfo() {
@@ -59,20 +60,47 @@ export default function EventInfo() {
                         {/* Program */}
                         <div style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1.5rem" }}>
                             <h4 style={{ color: "var(--color-accent-light)", fontSize: "1.1rem", marginBottom: "1rem" }}>構成（プログラム）</h4>
-                            <ul style={{ listStyle: "none", padding: 0 }}>
-                                <li style={{ marginBottom: "0.8rem", display: "flex", gap: "1rem" }}>
-                                    <span style={{ color: "var(--color-accent-light)", minWidth: "100px" }}>Chapter 1</span>
-                                    <span>小品集</span>
-                                </li>
-                                <li style={{ marginBottom: "0.8rem", display: "flex", gap: "1rem" }}>
-                                    <span style={{ color: "var(--color-accent-light)", minWidth: "100px" }}>Chapter 2</span>
-                                    <span>小品集</span>
-                                </li>
-                                <li style={{ display: "flex", gap: "1rem" }}>
-                                    <span style={{ color: "var(--color-accent)", minWidth: "100px", fontWeight: "bold" }}>Chapter 3</span>
-                                    <span style={{ color: "var(--color-accent)", fontWeight: "bold" }}>眠れる森の美女</span>
-                                </li>
+                            <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                                {PROGRAM_CHAPTERS.map((chapter) => (
+                                    <li
+                                        key={chapter.id}
+                                        style={{
+                                            padding: "0 0 1rem",
+                                            borderBottom: "1px solid rgba(255,255,255,0.08)",
+                                        }}
+                                    >
+                                        <span
+                                            style={{
+                                                display: "block",
+                                                color: chapter.featured ? "var(--color-accent)" : "var(--color-accent-light)",
+                                                fontSize: "0.82rem",
+                                                letterSpacing: "0.14em",
+                                                marginBottom: "0.35rem",
+                                                fontWeight: chapter.featured ? "bold" : undefined,
+                                            }}
+                                        >
+                                            {chapter.chapterLabel}
+                                        </span>
+                                        <span
+                                            style={{
+                                                display: "block",
+                                                color: chapter.featured ? "var(--color-accent)" : "var(--color-text)",
+                                                fontSize: "1.05rem",
+                                                marginBottom: "0.3rem",
+                                                fontWeight: chapter.featured ? "bold" : undefined,
+                                            }}
+                                        >
+                                            {chapter.title}
+                                        </span>
+                                        <span style={{ display: "block", color: "var(--color-text-muted)", fontSize: "0.92rem" }}>
+                                            {chapter.summary}
+                                        </span>
+                                    </li>
+                                ))}
                             </ul>
+                            <p style={{ color: "var(--color-text-muted)", fontSize: "0.82rem", marginTop: "0.9rem" }}>
+                                {PROGRAM_NOTE}
+                            </p>
                         </div>
 
                         {/* Studio Info */}
