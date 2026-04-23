@@ -61,34 +61,22 @@ export default function EventInfo() {
                         {/* Guests */}
                         <div style={{ borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1.5rem" }}>
                             <h4 style={{ color: "var(--color-accent-light)", fontSize: "1.1rem", marginBottom: "1rem" }}>ゲスト</h4>
-                            <div
-                                style={{
-                                    display: "grid",
-                                    gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-                                    gap: "1rem",
-                                }}
-                            >
-                                {GUEST_ARTISTS.map((guest) => (
+                            <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+                                {GUEST_ARTISTS.map((guest, index) => (
                                     <div
                                         key={guest.id}
-                                        className="glass-panel"
                                         style={{
-                                            padding: "1.25rem 1rem",
-                                            minHeight: "132px",
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            justifyContent: "space-between",
-                                            borderColor: "rgba(var(--color-accent-rgb), 0.2)",
-                                            background: "linear-gradient(180deg, rgba(var(--color-surface-rgb), 0.9) 0%, rgba(var(--color-primary-rgb), 0.72) 100%)",
+                                            paddingBottom: index === GUEST_ARTISTS.length - 1 ? 0 : "0.9rem",
+                                            borderBottom:
+                                                index === GUEST_ARTISTS.length - 1
+                                                    ? "none"
+                                                    : "1px solid rgba(255,255,255,0.08)",
                                         }}
                                     >
-                                        <p style={{ color: "var(--color-accent)", fontSize: "0.78rem", letterSpacing: "0.14em", marginBottom: "0.8rem" }}>
-                                            GUEST
-                                        </p>
-                                        <p style={{ color: "var(--color-text)", fontSize: "1.15rem", fontFamily: "var(--font-heading)", marginBottom: "0.55rem" }}>
+                                        <p style={{ color: "var(--color-text)", fontSize: "1.05rem", fontFamily: "var(--font-heading)", marginBottom: "0.2rem" }}>
                                             {guest.name}
                                         </p>
-                                        <p style={{ color: "var(--color-text-muted)", fontSize: "0.82rem", lineHeight: 1.7 }}>
+                                        <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", lineHeight: 1.7 }}>
                                             {guest.affiliation}
                                         </p>
                                     </div>
