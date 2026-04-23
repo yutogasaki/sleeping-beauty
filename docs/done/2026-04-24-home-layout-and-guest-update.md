@@ -26,7 +26,6 @@
 
 ## Residual Risks
 
-- ゲスト名の中央表記は添付画像をもとに `宮坂 柚` として反映しています。元データと別表記が必要ならそこだけすぐ直せます。
 - `Countdown.tsx` と `ProgramCarousel.tsx` のファイル自体は残しており、現在はホームから未使用の状態です。
 
 ## Follow-ups

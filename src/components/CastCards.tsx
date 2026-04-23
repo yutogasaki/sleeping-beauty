@@ -24,7 +24,7 @@ const castData: CastType[] = [
     {
         id: "desire",
         role: "デジレ王子",
-        name: "長谷川 元志",
+        name: "長谷川元志",
         description: "100年後の世界でリラの精に導かれ、オーロラ姫の呪いを解く運命の王子。",
         color: "#A2C2E6", // ロイヤルブルー寄り
         icon: "🗡️"

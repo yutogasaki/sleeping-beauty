@@ -7,17 +7,17 @@ export type GuestArtist = {
 export const GUEST_ARTISTS: GuestArtist[] = [
   {
     id: "hasegawa",
-    name: "長谷川 元志",
-    affiliation: "神戸チャコットバレエスタジオ",
+    name: "長谷川元志",
+    affiliation: "神澤千景バレエスタジオ",
   },
   {
     id: "miyasaka",
-    name: "宮坂 柚",
-    affiliation: "カロミオバレエ団",
+    name: "彦坂 柚",
+    affiliation: "カイロ国立バレエ団",
   },
   {
     id: "minamino",
     name: "南野 高廣",
-    affiliation: "榎本バレエ団",
+    affiliation: "松岡伶子バレエ団",
   },
 ];
