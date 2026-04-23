@@ -32,8 +32,12 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 
 ## Project Docs
 
+- [Docs index](./docs/index.md)
 - [Operating system](./docs/03_operating_system.md)
 - [Repo instructions](./AGENTS.md)
+- [Claude guide](./CLAUDE.md)
+- [Projects common AI guide pointer](./PROJECTS_COMMON_AI_GUIDE.md)
+- [Shared agent guide](./.agents/agent-guide.md)
 - [Task template](./docs/templates/task.md)
 - [Done template](./docs/templates/done.md)
 - [Memory template](./docs/templates/memory-entry.md)
@@ -45,6 +49,13 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 - [Memory folder](./docs/memory/README.md)
 - [ADRs folder](./docs/adrs/README.md)
 - [Skills folder](./docs/skills/README.md)
+
+## AI Working Environment
+
+- Shared cross-project AI standards are referenced through [PROJECTS_COMMON_AI_GUIDE.md](./PROJECTS_COMMON_AI_GUIDE.md)
+- Shared task, memory, and repo-local skills live in [./.agents/](./.agents)
+- Codex-specific hooks and adapter files live in [./.codex/](./.codex)
+- Frontend polish work can use [sleeping-beauty-ui-taste](./.agents/skills/sleeping-beauty-ui-taste/SKILL.md) together with locally installed `taste-skill` or `gpt-tasteskill`
 
 ## Learn More
 

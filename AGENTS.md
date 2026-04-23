@@ -6,6 +6,9 @@ This repository uses a lightweight operating system for product, design, enginee
 
 The source document is [docs/03_operating_system.md](/Users/yutogasaki/Projects/sleeping-beauty/docs/03_operating_system.md). This file turns that model into direct working instructions for agents and contributors.
 
+Shared cross-project AI environment guidance lives in [PROJECTS_COMMON_AI_GUIDE.md](/Users/yutogasaki/Projects/sleeping-beauty/PROJECTS_COMMON_AI_GUIDE.md), which points to `/Users/yutogasaki/Projects/_common-ai/PROJECTS_COMMON_AI_GUIDE.md`.
+When that shared guide conflicts with this repo's operating-system docs, this repo wins.
+
 ## Order of Truth
 
 When information conflicts, use this order:
