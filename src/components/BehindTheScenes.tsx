@@ -40,7 +40,7 @@ const timelineData: TimelineItemType[] = [
 
 export default function BehindTheScenes() {
     return (
-        <section className="section-padding" style={{ backgroundColor: "var(--color-primary)", position: "relative", zIndex: 10, borderTop: "1px solid rgba(212,175,55,0.1)" }}>
+        <section className="section-padding" style={{ backgroundColor: "var(--color-primary)", position: "relative", zIndex: 10, borderTop: "1px solid rgba(var(--color-accent-rgb), 0.18)" }}>
             <div className="container" style={{ maxWidth: "800px" }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -63,7 +63,7 @@ export default function BehindTheScenes() {
                         position: "absolute",
                         top: 0, left: "20px", bottom: 0,
                         width: "2px",
-                        background: "linear-gradient(to bottom, var(--color-accent) 0%, rgba(212,175,55,0.1) 100%)",
+                        background: "linear-gradient(to bottom, var(--color-accent) 0%, rgba(var(--color-accent-rgb), 0.1) 100%)",
                         zIndex: 0
                     }} />
 
@@ -91,7 +91,7 @@ export default function BehindTheScenes() {
                                 borderRadius: "50%",
                                 backgroundColor: item.status === "completed" ? "var(--color-accent)" :
                                     item.status === "active" ? "var(--color-text)" : "var(--color-primary-light)",
-                                boxShadow: item.status === "active" ? "0 0 10px 2px rgba(255,255,255,0.5)" : "none",
+                                boxShadow: item.status === "active" ? "0 0 10px 2px rgba(var(--color-accent-light-rgb), 0.35)" : "none",
                                 border: "2px solid var(--color-primary)"
                             }} />
 
@@ -101,7 +101,7 @@ export default function BehindTheScenes() {
                                     display: "inline-block",
                                     padding: "0.2rem 0.8rem",
                                     borderRadius: "20px",
-                                    backgroundColor: "rgba(212,175,55,0.1)",
+                                    backgroundColor: "rgba(var(--color-accent-rgb), 0.14)",
                                     color: "var(--color-accent)",
                                     fontSize: "0.8rem",
                                     fontWeight: "bold",

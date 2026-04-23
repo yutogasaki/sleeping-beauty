@@ -96,7 +96,7 @@ function PinGate({ configured, message, onAuthenticated }: PinGateProps) {
     <div
       style={{
         minHeight: "100vh",
-        backgroundColor: "#050A11",
+        backgroundColor: "var(--color-primary-dark)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -108,7 +108,7 @@ function PinGate({ configured, message, onAuthenticated }: PinGateProps) {
         onSubmit={handleSubmit}
         style={{
           backgroundColor: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(212, 175, 55, 0.3)",
+          border: "1px solid rgba(var(--color-accent-rgb), 0.3)",
           borderRadius: "12px",
           padding: "3rem 2.5rem",
           width: "100%",
@@ -179,7 +179,7 @@ function PinGate({ configured, message, onAuthenticated }: PinGateProps) {
             marginTop: "1rem",
             borderRadius: "8px",
             border: "1px solid var(--color-accent)",
-            backgroundColor: "rgba(212, 175, 55, 0.15)",
+            backgroundColor: "rgba(var(--color-accent-rgb), 0.15)",
             color: "var(--color-accent)",
             fontSize: "1rem",
             cursor: configured && !isSubmitting ? "pointer" : "not-allowed",
@@ -441,8 +441,8 @@ export default function AdminPage() {
       <div
         style={{
           padding: "2rem",
-          color: "white",
-          backgroundColor: "#050A11",
+          color: "var(--color-text)",
+          backgroundColor: "var(--color-primary-dark)",
           minHeight: "100vh",
         }}
       >
@@ -465,9 +465,9 @@ export default function AdminPage() {
     <div
       style={{
         padding: "2rem",
-        backgroundColor: "#050A11",
+        backgroundColor: "var(--color-primary-dark)",
         minHeight: "100vh",
-        color: "white",
+        color: "var(--color-text)",
         fontFamily: "var(--font-body)",
       }}
     >
@@ -521,8 +521,8 @@ export default function AdminPage() {
           style={{
             padding: "0.8rem 1.2rem",
             marginBottom: "1.5rem",
-            backgroundColor: "rgba(212, 175, 55, 0.1)",
-            border: "1px solid rgba(212, 175, 55, 0.3)",
+            backgroundColor: "rgba(var(--color-accent-rgb), 0.1)",
+            border: "1px solid rgba(var(--color-accent-rgb), 0.3)",
             borderRadius: "8px",
             color: "var(--color-accent)",
             fontSize: "0.9rem",
@@ -685,7 +685,7 @@ export default function AdminPage() {
                     cursor: "pointer",
                     backgroundColor: message.is_approved
                       ? "rgba(255,255,255,0.1)"
-                      : "#1E3E62",
+                      : "var(--color-primary-light)",
                     color: "white",
                   }}
                 >
@@ -767,9 +767,9 @@ function FilterButton({
         padding: "0.55rem 0.9rem",
         borderRadius: "999px",
         border: active
-          ? "1px solid rgba(212, 175, 55, 0.6)"
+          ? "1px solid rgba(var(--color-accent-rgb), 0.6)"
           : "1px solid rgba(255,255,255,0.12)",
-        backgroundColor: active ? "rgba(212, 175, 55, 0.16)" : "rgba(255,255,255,0.04)",
+        backgroundColor: active ? "rgba(var(--color-accent-rgb), 0.16)" : "rgba(255,255,255,0.04)",
         color: active ? "var(--color-accent-light)" : "var(--color-text-muted)",
         cursor: "pointer",
         fontSize: "0.9rem",

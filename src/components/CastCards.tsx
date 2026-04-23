@@ -51,8 +51,8 @@ export default function CastCards() {
     return (
         <section className="section-padding" style={{ backgroundColor: "var(--color-primary-dark)", position: "relative", zIndex: 10, overflow: "hidden" }}>
             {/* Decorative Background Elements */}
-            <div style={{ position: "absolute", top: "-50px", left: "-50px", width: "300px", height: "300px", background: "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
-            <div style={{ position: "absolute", bottom: "-100px", right: "-50px", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(11,25,44,0.5) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", top: "-50px", left: "-50px", width: "300px", height: "300px", background: "radial-gradient(circle, rgba(var(--color-accent-rgb), 0.08) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
+            <div style={{ position: "absolute", bottom: "-100px", right: "-50px", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(var(--color-primary-rgb), 0.4) 0%, transparent 70%)", borderRadius: "50%", pointerEvents: "none" }} />
 
             <div className="container" style={{ textAlign: "center" }}>
                 <motion.div
@@ -122,7 +122,7 @@ function FlipCard({ cast, index }: { cast: CastType; index: number }) {
                     width: "100%",
                     height: "100%",
                     backfaceVisibility: "hidden", // 裏返った時は見えない
-                    background: `linear-gradient(145deg, rgba(30, 62, 98, 0.8) 0%, rgba(11, 25, 44, 0.9) 100%)`,
+                    background: "linear-gradient(145deg, rgba(var(--color-primary-rgb), 0.86) 0%, rgba(var(--color-primary-dark-rgb), 0.92) 100%)",
                     border: `1px solid ${cast.color}40`,
                     borderRadius: "16px",
                     boxShadow: `0 15px 35px rgba(0,0,0,0.5), inset 0 0 0 1px ${cast.color}20`,
@@ -156,7 +156,7 @@ function FlipCard({ cast, index }: { cast: CastType; index: number }) {
                     height: "100%",
                     backfaceVisibility: "hidden",
                     transform: "rotateY(180deg)", // 初期状態で裏返しておく
-                    background: `linear-gradient(135deg, ${cast.color}15 0%, rgba(11,25,44,0.95) 100%)`,
+                    background: `linear-gradient(135deg, ${cast.color}15 0%, rgba(var(--color-primary-dark-rgb), 0.94) 100%)`,
                     border: `1px solid ${cast.color}`,
                     borderRadius: "16px",
                     boxShadow: `0 0 30px ${cast.color}30`,

@@ -7,7 +7,7 @@ export default function Footer() {
     return (
         <footer style={{
             backgroundColor: "var(--color-primary)",
-            borderTop: "1px solid rgba(212, 175, 55, 0.2)",
+            borderTop: "1px solid rgba(var(--color-accent-rgb), 0.22)",
             position: "relative",
             overflow: "hidden",
         }}>
@@ -119,7 +119,7 @@ export default function Footer() {
 
             {/* コピーライト */}
             <div style={{
-                borderTop: "1px solid rgba(212, 175, 55, 0.1)",
+                borderTop: "1px solid rgba(var(--color-accent-rgb), 0.14)",
                 padding: "1.5rem 2rem",
                 textAlign: "center",
             }}>
@@ -138,7 +138,7 @@ export default function Footer() {
                 <a
                     href="?preview=true"
                     style={{
-                        color: "rgba(255,255,255,0.15)",
+                        color: "rgba(var(--color-accent-light-rgb), 0.22)",
                         fontSize: "0.7rem",
                         textDecoration: "none",
                         marginTop: "0.5rem",

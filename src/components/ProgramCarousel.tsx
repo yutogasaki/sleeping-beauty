@@ -57,8 +57,8 @@ export default function ProgramCarousel() {
             style={{
                 height: "300vh", // スクロール領域を確保
                 backgroundColor: "var(--color-primary)",
-                borderTop: "1px solid rgba(212, 175, 55, 0.2)",
-                borderBottom: "1px solid rgba(212, 175, 55, 0.2)",
+                borderTop: "1px solid rgba(var(--color-accent-rgb), 0.24)",
+                borderBottom: "1px solid rgba(var(--color-accent-rgb), 0.24)",
             }}
         >
             <div style={{ position: "sticky", top: 0, height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
@@ -105,7 +105,7 @@ export default function ProgramCarousel() {
                         >
                             {/* ブックマーク/ページ番号的要素 */}
                             <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "10px", backgroundColor: "var(--color-accent)", opacity: 0.5 }} />
-                            <div style={{ position: "absolute", top: "1.5rem", color: "rgba(212,175,55,0.3)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>
+                            <div style={{ position: "absolute", top: "1.5rem", color: "rgba(var(--color-accent-rgb), 0.34)", fontSize: "0.8rem", letterSpacing: "0.2em" }}>
                                 PAGE 0{index + 1}
                             </div>
 

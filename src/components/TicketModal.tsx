@@ -18,9 +18,9 @@ function actionButtonStyle(variant: "primary" | "secondary") {
       width: "100%",
       padding: "0.9rem 1rem",
       borderRadius: "10px",
-      border: "1px solid rgba(212, 175, 55, 0.5)",
+      border: "1px solid rgba(var(--color-accent-rgb), 0.5)",
       background:
-        "linear-gradient(135deg, rgba(212, 175, 55, 0.28) 0%, rgba(251, 248, 204, 0.12) 100%)",
+        "linear-gradient(135deg, rgba(var(--color-accent-rgb), 0.28) 0%, rgba(var(--color-accent-light-rgb), 0.12) 100%)",
       color: "var(--color-accent-light)",
       fontSize: "0.95rem",
       fontWeight: 600,
@@ -34,8 +34,8 @@ function actionButtonStyle(variant: "primary" | "secondary") {
     width: "100%",
     padding: "0.85rem 1rem",
     borderRadius: "10px",
-    border: "1px solid rgba(255,255,255,0.14)",
-    backgroundColor: "rgba(255,255,255,0.04)",
+    border: "1px solid rgba(var(--color-accent-light-rgb), 0.16)",
+    backgroundColor: "rgba(var(--color-accent-light-rgb), 0.05)",
     color: "var(--color-text)",
     fontSize: "0.92rem",
     fontWeight: 500,
@@ -55,7 +55,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
           style={{
             position: "fixed",
             inset: 0,
-            backgroundColor: "rgba(5, 10, 17, 0.9)",
+            backgroundColor: "rgba(var(--color-primary-dark-rgb), 0.88)",
             backdropFilter: "blur(8px)",
             zIndex: 1000,
             display: "flex",
@@ -76,10 +76,10 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
               width: "100%",
               maxWidth: "380px",
               background:
-                "linear-gradient(135deg, rgba(30, 62, 98, 0.96) 0%, rgba(11, 25, 44, 0.98) 100%)",
+                "linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.96) 0%, rgba(var(--color-primary-dark-rgb), 0.98) 100%)",
               borderRadius: "15px",
               boxShadow:
-                "0 20px 50px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(212, 175, 55, 0.3)",
+                "0 20px 50px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.3)",
               overflow: "hidden",
               position: "relative",
             }}
@@ -88,7 +88,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
             <div
               style={{
                 height: "40px",
-                background: "linear-gradient(to right, #D4AF37, #FBF8CC, #D4AF37)",
+                background: "linear-gradient(to right, var(--color-accent), var(--color-accent-light), var(--color-accent))",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -96,7 +96,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
             >
               <span
                 style={{
-                  color: "#050a11",
+                  color: "var(--color-primary)",
                   fontWeight: "bold",
                   letterSpacing: "0.2em",
                   fontSize: "0.9rem",
@@ -112,7 +112,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                   position: "absolute",
                   inset: 0,
                   backgroundImage:
-                    "radial-gradient(circle, rgba(212,175,55,0.05) 1px, transparent 1px)",
+                    "radial-gradient(circle, rgba(var(--color-accent-rgb), 0.08) 1px, transparent 1px)",
                   backgroundSize: "10px 10px",
                   pointerEvents: "none",
                 }}
@@ -141,8 +141,8 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
 
               <div
                 style={{
-                  borderTop: "1px dashed rgba(212, 175, 55, 0.3)",
-                  borderBottom: "1px dashed rgba(212, 175, 55, 0.3)",
+                  borderTop: "1px dashed rgba(var(--color-accent-rgb), 0.38)",
+                  borderBottom: "1px dashed rgba(var(--color-accent-rgb), 0.38)",
                   padding: "1.4rem 0",
                   marginBottom: "1.5rem",
                 }}
@@ -158,9 +158,9 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                   marginBottom: "1.5rem",
                   padding: "1rem",
                   borderRadius: "12px",
-                  border: "1px solid rgba(212, 175, 55, 0.25)",
+                  border: "1px solid rgba(var(--color-accent-rgb), 0.28)",
                   background:
-                    "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)",
+                    "linear-gradient(180deg, rgba(var(--color-accent-light-rgb), 0.08) 0%, rgba(var(--color-accent-light-rgb), 0.03) 100%)",
                 }}
               >
                 <p
@@ -189,7 +189,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                     height: "48px",
                     borderRadius: "8px",
                     backgroundImage:
-                      "repeating-linear-gradient(90deg, rgba(251,248,204,0.92) 0 3px, transparent 3px 6px, rgba(212,175,55,0.88) 6px 8px, transparent 8px 11px)",
+                      "repeating-linear-gradient(90deg, rgba(var(--color-accent-light-rgb), 0.92) 0 3px, transparent 3px 6px, rgba(var(--color-accent-rgb), 0.88) 6px 8px, transparent 8px 11px)",
                     opacity: 0.82,
                   }}
                 />
@@ -256,7 +256,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                 width: "20px",
                 height: "20px",
                 borderRadius: "50%",
-                backgroundColor: "rgba(5, 10, 17, 0.9)",
+                backgroundColor: "rgba(var(--color-primary-dark-rgb), 0.88)",
               }}
             />
             <div
@@ -267,7 +267,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                 width: "20px",
                 height: "20px",
                 borderRadius: "50%",
-                backgroundColor: "rgba(5, 10, 17, 0.9)",
+                backgroundColor: "rgba(var(--color-primary-dark-rgb), 0.88)",
               }}
             />
           </motion.div>

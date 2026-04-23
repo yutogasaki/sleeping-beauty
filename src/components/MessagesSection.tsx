@@ -349,7 +349,7 @@ export default function MessagesSection() {
                         style={{
                             position: "fixed",
                             top: 0, left: 0, right: 0, bottom: 0,
-                            backgroundColor: "rgba(5, 10, 17, 0.85)",
+                            backgroundColor: "rgba(var(--color-primary-dark-rgb), 0.84)",
                             backdropFilter: "blur(4px)",
                             zIndex: 100,
                             display: "flex",
@@ -371,7 +371,7 @@ export default function MessagesSection() {
                                 textAlign: "center",
                                 position: "relative",
                                 boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
-                                border: "1px solid rgba(212, 175, 55, 0.3)"
+                                border: "1px solid rgba(var(--color-accent-rgb), 0.3)"
                             }}
                             onClick={(e) => e.stopPropagation()}
                         >
@@ -424,7 +424,7 @@ export default function MessagesSection() {
                                 position: "relative",
                                 textAlign: "left",
                                 boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
-                                border: "1px solid rgba(212, 175, 55, 0.3)"
+                                border: "1px solid rgba(var(--color-accent-rgb), 0.3)"
                             }}
                             onClick={(e) => e.stopPropagation()}
                         >
@@ -442,7 +442,7 @@ export default function MessagesSection() {
                                     className="flex-center"
                                     style={{ flexDirection: 'column', height: '250px', textAlign: 'center' }}
                                 >
-                                    <div style={{ fontSize: '4rem', marginBottom: '1rem', filter: 'drop-shadow(0 0 10px rgba(212,175,55,0.8))' }}>✨</div>
+                                    <div style={{ fontSize: '4rem', marginBottom: '1rem', filter: 'drop-shadow(0 0 10px rgba(var(--color-accent-rgb), 0.7))' }}>✨</div>
                                     <h4 style={{ color: 'var(--color-accent)', marginBottom: '0.8rem', fontSize: '1.4rem' }}>意気込みが森に宿りました</h4>
                                     <p style={{ color: 'var(--color-text-muted)', fontSize: '1rem', lineHeight: 1.6 }}>運営の確認後、<br />光の粒となって現れます。</p>
                                 </motion.div>
@@ -488,7 +488,7 @@ export default function MessagesSection() {
                                                 borderRadius: "8px",
                                                 background: "rgba(255,255,255,0.05)",
                                                 border: fieldErrors.name ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
-                                                color: "white",
+                                                color: "var(--color-text)",
                                                 outline: "none"
                                             }}
                                         />
@@ -515,7 +515,7 @@ export default function MessagesSection() {
                                                 borderRadius: "8px",
                                                 background: "rgba(255,255,255,0.05)",
                                                 border: fieldErrors.role ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
-                                                color: "white",
+                                                color: "var(--color-text)",
                                                 outline: "none"
                                             }}
                                         />
@@ -528,7 +528,7 @@ export default function MessagesSection() {
                                         <label style={{ display: "block", marginBottom: "0.5rem", color: "var(--color-text-muted)", fontSize: "0.9rem" }}>光の粒の色</label>
                                         <div style={{ display: "flex", gap: "1rem" }}>
                                             {MESSAGE_COLOR_OPTIONS.map(option => (
-                                                <label key={option.value} style={{ display: "flex", alignItems: "center", gap: "0.3rem", cursor: "pointer", color: "white", fontSize: "0.9rem" }}>
+                                                <label key={option.value} style={{ display: "flex", alignItems: "center", gap: "0.3rem", cursor: "pointer", color: "var(--color-text)", fontSize: "0.9rem" }}>
                                                     <input type="radio" name="color" value={option.value} checked={formData.color === option.value} onChange={() => setFormData({ ...formData, color: option.value })} />
                                                     {option.label}
                                                 </label>
@@ -557,7 +557,7 @@ export default function MessagesSection() {
                                                 borderRadius: "8px",
                                                 background: "rgba(255,255,255,0.05)",
                                                 border: fieldErrors.message ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
-                                                color: "white",
+                                                color: "var(--color-text)",
                                                 resize: "none",
                                                 outline: "none"
                                             }}
