@@ -4,9 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { PreviewProvider } from "../lib/PreviewContext";
 import MainHero from "./MainHero";
 import Prologue from "./Prologue";
-import Countdown from "./Countdown";
 import CastCards from "./CastCards";
-import ProgramCarousel from "./ProgramCarousel";
 import EventInfo from "./EventInfo";
 import MessagesSection from "./MessagesSection";
 import GiftSection from "./GiftSection";
@@ -40,10 +38,8 @@ export default function HomeContent() {
                 )}
                 <MainHero />
                 <Prologue />
-                <Countdown />
-                <CastCards />
-                <ProgramCarousel />
                 <EventInfo />
+                <CastCards />
                 <MessagesSection />
                 <GiftSection />
                 <BehindTheScenes />
