@@ -225,119 +225,124 @@ export default function MessagesSection() {
     };
 
     return (
-        <section className="section-padding" style={{ position: "relative", minHeight: "100dvh", backgroundColor: "var(--color-primary-dark)", overflow: "hidden" }}>
+        <section className="section-padding ornament-section" style={{ position: "relative", zIndex: activeMessage || isFormOpen ? 1000 : 10, minHeight: "100dvh", overflow: "hidden" }}>
+            <div className="container" style={{ position: "relative", zIndex: 2, maxWidth: "1120px" }}>
+                <div className="forest-panel" style={{ position: "relative", minHeight: "82dvh", overflow: "hidden", padding: "clamp(3rem, 7vw, 5rem) clamp(1rem, 4vw, 2.5rem)" }}>
 
-            {/* Background Forest Layer */}
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.4 }}>
-                <Image
-                    src="/images/rose_full_bg.png"
-                    alt="Forest and Roses"
-                    fill
-                    style={{ objectFit: "cover", objectPosition: "center", mixBlendMode: 'screen' }}
-                />
-            </div>
+                    {/* Background Forest Layer */}
+                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.46 }}>
+                        <Image
+                            src="/images/rose_full_bg.png"
+                            alt="Forest and Roses"
+                            fill
+                            style={{ objectFit: "cover", objectPosition: "center", mixBlendMode: 'screen' }}
+                        />
+                    </div>
 
-            <div className="container" style={{ position: "relative", zIndex: 10, textAlign: "center", marginBottom: "4rem" }}>
-                <motion.h3
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    style={{ color: "var(--color-accent)", fontSize: "2rem", marginBottom: "1rem" }}
-                >
-                    森に灯る光
-                </motion.h3>
-                <p style={{ color: "var(--color-text-muted)", fontSize: "1.1rem" }}>
-                    生徒たちの意気込みが光の粒となり、森を照らします。<br />
-                    光をタップしてメッセージをご覧ください。
-                </p>
-            </div>
-
-            {/* Lights Container */}
-            <div style={{ position: "relative", width: "100%", height: "60vh", maxWidth: "1000px", margin: "0 auto" }}>
-                {messages.map((msg) => {
-                    const isActive = activeId === msg.id;
-
-                    return (
-                        <motion.div
-                            key={msg.id}
-                            style={{
-                                position: "absolute",
-                                left: `${msg.x}%`,
-                                top: `${msg.y}%`,
-                                cursor: "pointer",
-                                zIndex: isActive ? 50 : 10,
-                            }}
-                            initial={{ opacity: 0, scale: 0 }}
-                            whileInView={{ opacity: 1, scale: msg.scale }}
+                    <div style={{ position: "relative", zIndex: 10, textAlign: "center", marginBottom: "4rem" }}>
+                        <motion.h3
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: msg.revealDelay, duration: 1 }}
-                            onClick={() => setActiveId(isActive ? null : msg.id)}
+                            className="section-heading-rule"
+                            style={{ color: "var(--color-accent)", fontSize: "2rem", marginBottom: "1rem" }}
                         >
-                            {/* Particle Sparkle */}
-                            <motion.div
-                                animate={{
-                                    y: [0, msg.floatOffset, 0],
-                                    opacity: [0.6, 1, 0.6],
-                                    scale: [1, 1.1, 1],
-                                    rotate: [0, msg.rotateAmplitude, -msg.rotateAmplitude, 0],
-                                }}
-                                transition={{
-                                    duration: msg.floatDuration,
-                                    repeat: Infinity,
-                                    ease: "easeInOut",
-                                }}
-                                style={{ position: 'relative', width: "60px", height: "60px", margin: "0 auto" }}
-                                className="flex-center"
-                            >
-                                <div style={{
-                                    position: 'relative', width: "60px", height: "60px", margin: "0 auto",
-                                    // color_theme に応じて色味を変えるフィルター処理
-                                    filter: msg.color_theme === 'pink' ? 'hue-rotate(300deg)' :
-                                        msg.color_theme === 'blue' ? 'hue-rotate(180deg)' :
-                                            msg.color_theme === 'pure' ? 'grayscale(100%) brightness(2)' : 'none'
-                                }}>
-                                    <Image
-                                        src="/images/light_particle.png"
-                                        alt="Light Particle"
-                                        width={60}
-                                        height={60}
-                                        style={{
-                                            objectFit: "contain",
-                                            mixBlendMode: "screen",
-                                            filter: "brightness(1.5) contrast(2) drop-shadow(0 0 15px rgba(255, 235, 150, 0.9))",
-                                            maskImage: "radial-gradient(circle, black 30%, transparent 70%)",
-                                            WebkitMaskImage: "radial-gradient(circle, black 30%, transparent 70%)"
+                            森に灯る光
+                        </motion.h3>
+                        <p style={{ color: "var(--color-text-muted)", fontSize: "1.1rem" }}>
+                            生徒たちの意気込みが光の粒となり、森を照らします。<br />
+                            光をタップしてメッセージをご覧ください。
+                        </p>
+                    </div>
+
+                    {/* Lights Container */}
+                    <div style={{ position: "relative", zIndex: 10, width: "100%", height: "60vh", maxWidth: "1000px", margin: "0 auto" }}>
+                        {messages.map((msg) => {
+                            const isActive = activeId === msg.id;
+
+                            return (
+                                <motion.div
+                                    key={msg.id}
+                                    style={{
+                                        position: "absolute",
+                                        left: `${msg.x}%`,
+                                        top: `${msg.y}%`,
+                                        cursor: "pointer",
+                                        zIndex: isActive ? 50 : 10,
+                                    }}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    whileInView={{ opacity: 1, scale: msg.scale }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: msg.revealDelay, duration: 1 }}
+                                    onClick={() => setActiveId(isActive ? null : msg.id)}
+                                >
+                                    {/* Particle Sparkle */}
+                                    <motion.div
+                                        animate={{
+                                            y: [0, msg.floatOffset, 0],
+                                            opacity: [0.6, 1, 0.6],
+                                            scale: [1, 1.1, 1],
+                                            rotate: [0, msg.rotateAmplitude, -msg.rotateAmplitude, 0],
                                         }}
-                                    />
-                                </div>
-                            </motion.div>
+                                        transition={{
+                                            duration: msg.floatDuration,
+                                            repeat: Infinity,
+                                            ease: "easeInOut",
+                                        }}
+                                        style={{ position: 'relative', width: "60px", height: "60px", margin: "0 auto" }}
+                                        className="flex-center"
+                                    >
+                                        <div style={{
+                                            position: 'relative', width: "60px", height: "60px", margin: "0 auto",
+                                            // color_theme に応じて色味を変えるフィルター処理
+                                            filter: msg.color_theme === 'pink' ? 'hue-rotate(300deg)' :
+                                                msg.color_theme === 'blue' ? 'hue-rotate(180deg)' :
+                                                    msg.color_theme === 'pure' ? 'grayscale(100%) brightness(2)' : 'none'
+                                        }}>
+                                            <Image
+                                                src="/images/light_particle.png"
+                                                alt="Light Particle"
+                                                width={60}
+                                                height={60}
+                                                style={{
+                                                    objectFit: "contain",
+                                                    mixBlendMode: "screen",
+                                                    filter: "brightness(1.5) contrast(2) drop-shadow(0 0 15px rgba(255, 235, 150, 0.9))",
+                                                    maskImage: "radial-gradient(circle, black 30%, transparent 70%)",
+                                                    WebkitMaskImage: "radial-gradient(circle, black 30%, transparent 70%)"
+                                                }}
+                                            />
+                                        </div>
+                                    </motion.div>
 
-                            {/* Popup Message was moved out to a modal */}
-                        </motion.div>
-                    );
-                })}
+                                    {/* Popup Message was moved out to a modal */}
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+
+                    <div className="flex-center" style={{ marginTop: "2rem", zIndex: 10, position: "relative" }}>
+                        <button className="btn-primary" onClick={handleOpenForm}>
+                            意気込みを投稿する（生徒専用）
+                        </button>
+                    </div>
+
+                    {/* Decorative Crown Layer */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 0.16 }}
+                        transition={{ duration: 2 }}
+                        style={{ position: 'absolute', bottom: "-10%", right: "-5%", width: "40%", height: "40%", pointerEvents: 'none' }}
+                    >
+                        <Image
+                            src="/images/crown.png"
+                            alt="Crown Decoration"
+                            fill
+                            style={{ objectFit: "contain", objectPosition: "bottom right", mixBlendMode: 'screen' }}
+                        />
+                    </motion.div>
+                </div>
             </div>
-
-            <div className="flex-center" style={{ marginTop: "2rem", zIndex: 10, position: "relative" }}>
-                <button className="btn-primary" onClick={handleOpenForm}>
-                    意気込みを投稿する（生徒専用）
-                </button>
-            </div>
-
-            {/* Decorative Crown Layer */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 0.15 }}
-                transition={{ duration: 2 }}
-                style={{ position: 'absolute', bottom: "-10%", right: "-5%", width: "40%", height: "40%", pointerEvents: 'none' }}
-            >
-                <Image
-                    src="/images/crown.png"
-                    alt="Crown Decoration"
-                    fill
-                    style={{ objectFit: "contain", objectPosition: "bottom right", mixBlendMode: 'screen' }}
-                />
-            </motion.div>
 
             {/* Modal Overlay for Showing Message */}
             <AnimatePresence>
@@ -370,7 +375,7 @@ export default function MessagesSection() {
                                 padding: "3rem 2rem",
                                 textAlign: "center",
                                 position: "relative",
-                                boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+                                boxShadow: "0 20px 50px rgba(var(--color-ink-rgb), 0.22)",
                                 border: "1px solid rgba(var(--color-accent-rgb), 0.3)"
                             }}
                             onClick={(e) => e.stopPropagation()}
@@ -423,7 +428,7 @@ export default function MessagesSection() {
                                 padding: "2.5rem 2rem",
                                 position: "relative",
                                 textAlign: "left",
-                                boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+                                boxShadow: "0 20px 50px rgba(var(--color-ink-rgb), 0.22)",
                                 border: "1px solid rgba(var(--color-accent-rgb), 0.3)"
                             }}
                             onClick={(e) => e.stopPropagation()}
@@ -442,7 +447,9 @@ export default function MessagesSection() {
                                     className="flex-center"
                                     style={{ flexDirection: 'column', height: '250px', textAlign: 'center' }}
                                 >
-                                    <div style={{ fontSize: '4rem', marginBottom: '1rem', filter: 'drop-shadow(0 0 10px rgba(var(--color-accent-rgb), 0.7))' }}>✨</div>
+                                    <div style={{ width: '76px', height: '76px', marginBottom: '1rem', filter: 'drop-shadow(0 8px 14px rgba(var(--color-gold-rgb), 0.28))', position: 'relative' }}>
+                                        <Image src="/images/light_particle.png" alt="" fill sizes="76px" style={{ objectFit: "contain" }} />
+                                    </div>
                                     <h4 style={{ color: 'var(--color-accent)', marginBottom: '0.8rem', fontSize: '1.4rem' }}>意気込みが森に宿りました</h4>
                                     <p style={{ color: 'var(--color-text-muted)', fontSize: '1rem', lineHeight: 1.6 }}>運営の確認後、<br />光の粒となって現れます。</p>
                                 </motion.div>
@@ -486,8 +493,8 @@ export default function MessagesSection() {
                                                 width: "100%",
                                                 padding: "0.8rem",
                                                 borderRadius: "8px",
-                                                background: "rgba(255,255,255,0.05)",
-                                                border: fieldErrors.name ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
+                                                background: "rgba(var(--color-paper-light-rgb), 0.72)",
+                                                border: fieldErrors.name ? "1px solid #c85f68" : "1px solid var(--color-line)",
                                                 color: "var(--color-text)",
                                                 outline: "none"
                                             }}
@@ -513,8 +520,8 @@ export default function MessagesSection() {
                                                 width: "100%",
                                                 padding: "0.8rem",
                                                 borderRadius: "8px",
-                                                background: "rgba(255,255,255,0.05)",
-                                                border: fieldErrors.role ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
+                                                background: "rgba(var(--color-paper-light-rgb), 0.72)",
+                                                border: fieldErrors.role ? "1px solid #c85f68" : "1px solid var(--color-line)",
                                                 color: "var(--color-text)",
                                                 outline: "none"
                                             }}
@@ -555,8 +562,8 @@ export default function MessagesSection() {
                                                 width: "100%",
                                                 padding: "0.8rem",
                                                 borderRadius: "8px",
-                                                background: "rgba(255,255,255,0.05)",
-                                                border: fieldErrors.message ? "1px solid #fda4af" : "1px solid rgba(255,255,255,0.1)",
+                                                background: "rgba(var(--color-paper-light-rgb), 0.72)",
+                                                border: fieldErrors.message ? "1px solid #c85f68" : "1px solid var(--color-line)",
                                                 color: "var(--color-text)",
                                                 resize: "none",
                                                 outline: "none"

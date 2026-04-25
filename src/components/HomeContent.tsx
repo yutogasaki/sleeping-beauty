@@ -17,7 +17,7 @@ export default function HomeContent() {
 
     return (
         <PreviewProvider value={isPreview}>
-            <main style={{ backgroundColor: "var(--color-primary-dark)", minHeight: "100vh" }}>
+            <main style={{ backgroundColor: "var(--color-paper)", minHeight: "100vh" }}>
                 {isPreview && (
                     <div style={{
                         position: "fixed",

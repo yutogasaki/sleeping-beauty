@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { X } from "lucide-react";
 
 import { EVENT_DETAILS, getGoogleCalendarUrl } from "../lib/eventDetails";
 
@@ -18,10 +19,10 @@ function actionButtonStyle(variant: "primary" | "secondary") {
       width: "100%",
       padding: "0.9rem 1rem",
       borderRadius: "10px",
-      border: "1px solid rgba(var(--color-accent-rgb), 0.5)",
+      border: "1px solid rgba(var(--color-ink-rgb), 0.18)",
       background:
-        "linear-gradient(135deg, rgba(var(--color-accent-rgb), 0.28) 0%, rgba(var(--color-accent-light-rgb), 0.12) 100%)",
-      color: "var(--color-accent-light)",
+        "linear-gradient(135deg, var(--color-rose) 0%, #df9589 100%)",
+      color: "var(--color-paper-light)",
       fontSize: "0.95rem",
       fontWeight: 600,
       textAlign: "center" as const,
@@ -33,9 +34,9 @@ function actionButtonStyle(variant: "primary" | "secondary") {
     display: "block",
     width: "100%",
     padding: "0.85rem 1rem",
-    borderRadius: "10px",
-    border: "1px solid rgba(var(--color-accent-light-rgb), 0.16)",
-    backgroundColor: "rgba(var(--color-accent-light-rgb), 0.05)",
+      borderRadius: "10px",
+    border: "1px solid var(--color-line)",
+    backgroundColor: "rgba(var(--color-paper-light-rgb), 0.68)",
     color: "var(--color-text)",
     fontSize: "0.92rem",
     fontWeight: 500,
@@ -55,7 +56,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
           style={{
             position: "fixed",
             inset: 0,
-            backgroundColor: "rgba(var(--color-primary-dark-rgb), 0.88)",
+            backgroundColor: "rgba(var(--color-forest-dark-rgb), 0.88)",
             backdropFilter: "blur(8px)",
             zIndex: 1000,
             display: "flex",
@@ -64,6 +65,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
             padding: "1rem",
             transformStyle: "preserve-3d",
             perspective: "1000px",
+            overflowY: "auto",
           }}
           onClick={onClose}
         >
@@ -76,19 +78,46 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
               width: "100%",
               maxWidth: "380px",
               background:
-                "linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.96) 0%, rgba(var(--color-primary-dark-rgb), 0.98) 100%)",
+                "linear-gradient(135deg, rgba(var(--color-paper-light-rgb), 0.98) 0%, rgba(var(--color-paper-rgb), 0.98) 100%)",
               borderRadius: "15px",
               boxShadow:
-                "0 20px 50px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.3)",
-              overflow: "hidden",
+                "0 20px 50px rgba(var(--color-forest-dark-rgb), 0.34), inset 0 0 0 1px var(--color-line-strong)",
+              maxHeight: "calc(100dvh - 2rem)",
+              overflowY: "auto",
+              overscrollBehavior: "contain",
+              WebkitOverflowScrolling: "touch",
               position: "relative",
             }}
             onClick={(event) => event.stopPropagation()}
           >
+            <button
+              aria-label="閉じる"
+              onClick={onClose}
+              style={{
+                position: "absolute",
+                top: "0.65rem",
+                right: "0.65rem",
+                width: "36px",
+                height: "36px",
+                borderRadius: "999px",
+                border: "1px solid rgba(var(--color-ink-rgb), 0.18)",
+                backgroundColor: "rgba(var(--color-paper-light-rgb), 0.9)",
+                color: "var(--color-text)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 5,
+                boxShadow: "0 8px 18px rgba(var(--color-forest-dark-rgb), 0.12)",
+              }}
+            >
+              <X size={18} aria-hidden="true" />
+            </button>
+
             <div
               style={{
                 height: "40px",
-                background: "linear-gradient(to right, var(--color-accent), var(--color-accent-light), var(--color-accent))",
+                background: "linear-gradient(to right, var(--color-sage), var(--color-accent-light), var(--color-rose))",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -96,7 +125,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
             >
               <span
                 style={{
-                  color: "var(--color-primary)",
+                  color: "var(--color-ink)",
                   fontWeight: "bold",
                   letterSpacing: "0.2em",
                   fontSize: "0.9rem",
@@ -112,7 +141,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                   position: "absolute",
                   inset: 0,
                   backgroundImage:
-                    "radial-gradient(circle, rgba(var(--color-accent-rgb), 0.08) 1px, transparent 1px)",
+                    "radial-gradient(circle, rgba(var(--color-ink-rgb), 0.08) 1px, transparent 1px)",
                   backgroundSize: "10px 10px",
                   pointerEvents: "none",
                 }}
@@ -141,8 +170,8 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
 
               <div
                 style={{
-                  borderTop: "1px dashed rgba(var(--color-accent-rgb), 0.38)",
-                  borderBottom: "1px dashed rgba(var(--color-accent-rgb), 0.38)",
+                  borderTop: "1px dashed rgba(var(--color-ink-rgb), 0.3)",
+                  borderBottom: "1px dashed rgba(var(--color-ink-rgb), 0.3)",
                   padding: "1.4rem 0",
                   marginBottom: "1.5rem",
                 }}
@@ -158,9 +187,9 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                   marginBottom: "1.5rem",
                   padding: "1rem",
                   borderRadius: "12px",
-                  border: "1px solid rgba(var(--color-accent-rgb), 0.28)",
+                  border: "1px solid var(--color-line)",
                   background:
-                    "linear-gradient(180deg, rgba(var(--color-accent-light-rgb), 0.08) 0%, rgba(var(--color-accent-light-rgb), 0.03) 100%)",
+                    "linear-gradient(180deg, rgba(var(--color-paper-light-rgb), 0.82) 0%, rgba(var(--color-paper-aged-rgb), 0.22) 100%)",
                 }}
               >
                 <p
@@ -175,7 +204,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                 </p>
                 <p
                   style={{
-                    color: "var(--color-accent-light)",
+                    color: "var(--color-accent)",
                     fontWeight: "bold",
                     letterSpacing: "0.18em",
                     marginBottom: "0.9rem",
@@ -189,7 +218,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                     height: "48px",
                     borderRadius: "8px",
                     backgroundImage:
-                      "repeating-linear-gradient(90deg, rgba(var(--color-accent-light-rgb), 0.92) 0 3px, transparent 3px 6px, rgba(var(--color-accent-rgb), 0.88) 6px 8px, transparent 8px 11px)",
+                      "repeating-linear-gradient(90deg, rgba(var(--color-ink-rgb), 0.62) 0 3px, transparent 3px 6px, rgba(var(--color-accent-rgb), 0.7) 6px 8px, transparent 8px 11px)",
                     opacity: 0.82,
                   }}
                 />
@@ -256,7 +285,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                 width: "20px",
                 height: "20px",
                 borderRadius: "50%",
-                backgroundColor: "rgba(var(--color-primary-dark-rgb), 0.88)",
+                backgroundColor: "rgba(var(--color-forest-dark-rgb), 0.88)",
               }}
             />
             <div
@@ -267,7 +296,7 @@ export default function TicketModal({ isOpen, onClose }: TicketModalProps) {
                 width: "20px",
                 height: "20px",
                 borderRadius: "50%",
-                backgroundColor: "rgba(var(--color-primary-dark-rgb), 0.88)",
+                backgroundColor: "rgba(var(--color-forest-dark-rgb), 0.88)",
               }}
             />
           </motion.div>

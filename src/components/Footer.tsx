@@ -6,8 +6,9 @@ import { EVENT_DETAILS } from "../lib/eventDetails";
 export default function Footer() {
     return (
         <footer style={{
-            backgroundColor: "var(--color-primary)",
-            borderTop: "1px solid rgba(var(--color-accent-rgb), 0.22)",
+            background:
+                "linear-gradient(180deg, rgba(var(--color-paper-rgb), 0.96) 0%, rgba(var(--color-paper-aged-rgb), 0.55) 100%)",
+            borderTop: "1px solid var(--color-line)",
             position: "relative",
             overflow: "hidden",
         }}>
@@ -119,16 +120,17 @@ export default function Footer() {
 
             {/* コピーライト */}
             <div style={{
-                borderTop: "1px solid rgba(var(--color-accent-rgb), 0.14)",
+                borderTop: "1px solid var(--color-line)",
                 padding: "1.5rem 2rem",
                 textAlign: "center",
             }}>
                 <p style={{
-                    color: "var(--color-accent-light)",
+                    color: "var(--color-accent)",
                     fontSize: "1rem",
                     marginBottom: "0.5rem",
                     fontFamily: "var(--font-heading)",
                     letterSpacing: "0.05em",
+                    fontWeight: 600,
                 }}>
                     眠れる森の美女
                 </p>
