@@ -464,6 +464,123 @@ a {
   transform: rotate(180deg);
 }
 
+.gift-section {
+  overflow: hidden;
+}
+
+.container.gift-container {
+  max-width: 900px;
+}
+
+.gift-panel {
+  padding: 3rem 2rem;
+  text-align: center;
+  border: 1px solid var(--color-line-strong);
+}
+
+.gift-header {
+  max-width: 680px;
+  margin: 0 auto 2.5rem;
+}
+
+.gift-header .section-heading-rule {
+  color: var(--color-accent);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.gift-subtitle {
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+}
+
+.gift-lead {
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+}
+
+.gift-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: 2rem;
+  align-items: stretch;
+  text-align: left;
+}
+
+.gift-preparation-note {
+  position: relative;
+  padding: 0.35rem 0 0.35rem 1.3rem;
+}
+
+.gift-preparation-note::before {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  bottom: 0.15rem;
+  left: 0;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--color-rose), var(--color-gold));
+}
+
+.gift-preparation-note h4 {
+  color: var(--color-sage);
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+}
+
+.gift-preparation-note p {
+  color: var(--color-text-muted);
+  font-size: 0.94rem;
+  line-height: 1.8;
+}
+
+.gift-flower-list {
+  border-top: 1px solid rgba(var(--color-ink-rgb), 0.16);
+}
+
+.gift-list-label {
+  color: var(--color-gold);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  padding: 0 0 0.9rem;
+}
+
+.gift-flower-row {
+  display: grid;
+  grid-template-columns: 0.85rem minmax(0, 1fr);
+  gap: 0.85rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(var(--color-ink-rgb), 0.16);
+}
+
+.gift-flower-bullet {
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-top: 0.48rem;
+  border-radius: 999px;
+  background: var(--color-rose);
+  box-shadow: 0 0 0 4px rgba(var(--color-rose-rgb), 0.11);
+}
+
+.gift-flower-row h4 {
+  color: var(--color-text);
+  font-size: 1.06rem;
+  line-height: 1.4;
+  margin-bottom: 0.2rem;
+}
+
+.gift-flower-row p {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
 .forest-framed-section {
   --color-text: #f8ead2;
   --color-text-rgb: 248, 234, 210;
@@ -564,6 +681,28 @@ a {
   .forest-framed-section::before {
     inset: 0.8rem;
     border-radius: 10px;
+  }
+
+  .gift-panel {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .gift-header {
+    margin-bottom: 2rem;
+  }
+
+  .gift-lead {
+    font-size: 1.05rem;
+  }
+
+  .gift-body {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+
+  .gift-preparation-note,
+  .gift-flower-list {
+    text-align: left;
   }
 }
 

@@ -1,0 +1,103 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff7f1"/>
+      <stop offset="0.54" stop-color="#f8e4dc"/>
+      <stop offset="1" stop-color="#f1d7c6"/>
+    </linearGradient>
+    <radialGradient id="pinkGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(320 210) rotate(38) scale(430 280)">
+      <stop stop-color="#f0a8a2" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#f0a8a2" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="creamGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(815 380) rotate(42) scale(470 300)">
+      <stop stop-color="#fff9ed" stop-opacity="0.86"/>
+      <stop offset="1" stop-color="#fff9ed" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shoe" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f7c8c4"/>
+      <stop offset="1" stop-color="#d78984"/>
+    </linearGradient>
+    <linearGradient id="tutu" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#fff9ed" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="#f4b9bd" stop-opacity="0.78"/>
+    </linearGradient>
+    <linearGradient id="goldLine" x1="188" y1="0" x2="1012" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b58a50" stop-opacity="0"/>
+      <stop offset="0.22" stop-color="#b58a50" stop-opacity="0.62"/>
+      <stop offset="0.5" stop-color="#c97970" stop-opacity="0.54"/>
+      <stop offset="0.78" stop-color="#b58a50" stop-opacity="0.62"/>
+      <stop offset="1" stop-color="#b58a50" stop-opacity="0"/>
+    </linearGradient>
+    <pattern id="grain" width="46" height="46" patternUnits="userSpaceOnUse">
+      <path d="M6 12H7V13H6V12ZM21 6H22V7H21V6ZM39 18H40V19H39V18ZM14 32H15V33H14V32ZM32 39H33V40H32V39Z" fill="#654236" opacity="0.14"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="675" fill="url(#paper)"/>
+  <rect width="1200" height="675" fill="url(#pinkGlow)"/>
+  <rect width="1200" height="675" fill="url(#creamGlow)"/>
+  <rect width="1200" height="675" fill="url(#grain)" opacity="0.35"/>
+
+  <rect x="84" y="56" width="1032" height="563" rx="30" stroke="#c97970" stroke-opacity="0.25" stroke-width="2"/>
+  <rect x="112" y="84" width="976" height="507" rx="24" stroke="#b58a50" stroke-opacity="0.26" stroke-width="2"/>
+  <path d="M188 148H1012" stroke="url(#goldLine)" stroke-width="3"/>
+  <path d="M188 529H1012" stroke="url(#goldLine)" stroke-width="3"/>
+
+  <g opacity="0.62">
+    <circle cx="249" cy="166" r="13" fill="#f5bbb8"/>
+    <circle cx="943" cy="166" r="10" fill="#f5bbb8"/>
+    <circle cx="998" cy="485" r="13" fill="#f5bbb8"/>
+    <circle cx="201" cy="488" r="8" fill="#f5bbb8"/>
+    <path d="M236 392C320 344 407 333 499 360C565 379 633 376 704 349C773 323 851 330 945 389" stroke="#c97970" stroke-opacity="0.22" stroke-width="4" stroke-linecap="round"/>
+    <path d="M274 430C359 389 452 386 553 421C647 453 737 439 836 382" stroke="#b58a50" stroke-opacity="0.2" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(238 172)">
+    <path d="M210 238C261 183 405 182 458 238C417 257 365 268 334 263C301 268 250 257 210 238Z" fill="url(#tutu)" stroke="#c97970" stroke-opacity="0.34" stroke-width="4"/>
+    <path d="M246 234L222 310C252 300 284 296 315 302L334 258L353 302C385 296 416 300 447 310L421 234" fill="#fff5ed" fill-opacity="0.74"/>
+    <path d="M258 227C287 207 381 207 410 227C384 241 284 241 258 227Z" fill="#f7c8c4" stroke="#c97970" stroke-opacity="0.34" stroke-width="3"/>
+    <path d="M310 122C323 91 350 91 362 122L407 227H265L310 122Z" fill="#fff9ed" fill-opacity="0.86" stroke="#c97970" stroke-opacity="0.32" stroke-width="4"/>
+    <path d="M314 125C331 141 344 141 359 125" stroke="#b58a50" stroke-opacity="0.42" stroke-width="4" stroke-linecap="round"/>
+    <path d="M335 95V54" stroke="#b58a50" stroke-opacity="0.55" stroke-width="4" stroke-linecap="round"/>
+    <path d="M335 54C364 60 381 51 392 29" stroke="#b58a50" stroke-opacity="0.55" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(670 258) rotate(-16)">
+    <path d="M4 120C48 81 108 88 150 128C117 162 41 160 4 120Z" fill="url(#shoe)" stroke="#9f675c" stroke-opacity="0.38" stroke-width="4"/>
+    <path d="M38 118C72 100 107 107 132 129" stroke="#fff9ed" stroke-opacity="0.76" stroke-width="5" stroke-linecap="round"/>
+    <path d="M69 86C57 43 47 18 23 0" stroke="#c97970" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round"/>
+    <path d="M92 88C120 49 143 29 177 23" stroke="#c97970" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(753 274) rotate(15)">
+    <path d="M4 120C48 81 108 88 150 128C117 162 41 160 4 120Z" fill="url(#shoe)" stroke="#9f675c" stroke-opacity="0.38" stroke-width="4"/>
+    <path d="M38 118C72 100 107 107 132 129" stroke="#fff9ed" stroke-opacity="0.76" stroke-width="5" stroke-linecap="round"/>
+    <path d="M70 86C61 45 49 21 22 3" stroke="#c97970" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round"/>
+    <path d="M94 87C126 55 153 41 188 42" stroke="#c97970" stroke-opacity="0.5" stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(206 454)" opacity="0.72">
+    <path d="M0 44C32 21 66 21 100 42C66 53 30 54 0 44Z" fill="#7f9468"/>
+    <path d="M78 36C99 9 128 3 164 18C140 45 111 53 78 36Z" fill="#7f9468"/>
+    <path d="M39 41C50 15 78 6 113 18C94 44 68 53 39 41Z" fill="#f0a8a2"/>
+    <path d="M12 44C64 35 112 26 154 14" stroke="#654236" stroke-opacity="0.38" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(998 455) scale(-1 1)" opacity="0.72">
+    <path d="M0 44C32 21 66 21 100 42C66 53 30 54 0 44Z" fill="#7f9468"/>
+    <path d="M78 36C99 9 128 3 164 18C140 45 111 53 78 36Z" fill="#7f9468"/>
+    <path d="M39 41C50 15 78 6 113 18C94 44 68 53 39 41Z" fill="#f0a8a2"/>
+    <path d="M12 44C64 35 112 26 154 14" stroke="#654236" stroke-opacity="0.38" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <text x="600" y="150" text-anchor="middle" fill="#907060" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="9">
+    BEHIND THE SCENES
+  </text>
+  <text x="600" y="197" text-anchor="middle" fill="#654236" font-family="'Hiragino Mincho ProN', 'Yu Mincho', 'Shippori Mincho', serif" font-size="40" font-weight="600" letter-spacing="8">
+    舞台裏の記録
+  </text>
+  <text x="600" y="506" text-anchor="middle" fill="#c97970" font-family="Inter, Helvetica, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="5">
+    2026.04.01
+  </text>
+  <text x="600" y="568" text-anchor="middle" fill="#654236" font-family="'Hiragino Mincho ProN', 'Yu Mincho', 'Shippori Mincho', serif" font-size="64" font-weight="600" letter-spacing="12">
+    配役決定
+  </text>
+</svg>

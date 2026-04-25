@@ -55,7 +55,7 @@ AYAMI BALLET STUDIO 第4回発表会「眠れる森の美女」の公開サイ�
 3. Event Information
 4. Cast And Characters
 5. Messages / Light Particles
-6. Digital Gift / Support, only if clearly marked as mock or wired to real payment
+6. Flower Gift / Support, only as a real future flower-purchase direction with clear preparation-state copy
 7. Behind The Scenes
 8. Footer
 
@@ -317,9 +317,9 @@ Empty/fallback message:
 最初の光を灯して、舞台への想いを届けましょう。
 ```
 
-### Digital Gift / Support
+### Flower Gift / Support
 
-Use this section carefully. If payment is not real, it must be clearly labeled as mock behavior.
+Use this section carefully. Until flower sales and delivery are real, the public UI must be clearly labeled as preparing for future purchase.
 
 Heading:
 
@@ -330,22 +330,22 @@ Heading:
 Body:
 
 ```text
-皆様のあたたかなご支援が、舞台をさらに美しく彩ります。
-お花に代わるデジタルギフトで、ダンサーたちへエールをお送りください。
+お花を購入して、出演者へお届けできるよう準備しています。
+受付開始後は、出演者名を選んでお祝い花をお申し込みいただけます。
 ```
 
-Mock disclaimer:
+Preparation note:
 
 ```text
-※これはモック機能です。実際の決済処理は行われません。
+価格・受付方法・お届け条件は、決まり次第ご案内します。
 ```
 
-Options:
+Planned flower types:
 
 ```text
-ルビーの祝福 / 1,000円 / あたたかな応援の気持ちを贈ります
-サファイアの祈り / 3,000円 / 舞台の成功を願う深い祈りを贈ります
-魔法のバラ / 5,000円 / 最高級の賛辞と永遠の魔法を贈ります
+花束 / 出演者へ気持ちを届ける、手渡ししやすいお祝い花。
+アレンジメント花 / 楽屋や受付まわりを上品に彩る置き型のお花。
+スタンド花 / 会場に華やぎを添える、舞台祝い向けのお花。
 ```
 
 ### Behind The Scenes

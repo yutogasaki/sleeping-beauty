@@ -9,6 +9,7 @@ type TimelineItemType = {
     title: string;
     description: string;
     image: string | null;
+    imageAlt: string;
     status: "completed" | "active" | "upcoming";
 };
 
@@ -18,7 +19,8 @@ const timelineData: TimelineItemType[] = [
         date: "2026.04.01",
         title: "配役決定",
         description: "本番に向けて配役が決定しました。これから作品づくりと稽古の記録を少しずつお届けしていきます。",
-        image: "/images/corps_de_ballet_silhouette.png",
+        image: "/images/behind-the-scenes-casting.svg",
+        imageAlt: "バレエシューズと小さなチュチュのイラスト。2026.04.01 配役決定",
         status: "completed"
     }
 ];
@@ -105,7 +107,7 @@ export default function BehindTheScenes() {
                                 {item.image && (
                                     <div style={{
                                         width: "100%",
-                                        height: "150px",
+                                        aspectRatio: "16 / 9",
                                         borderRadius: "8px",
                                         backgroundColor: "rgba(var(--color-paper-aged-rgb), 0.35)",
                                         border: "1px solid var(--color-line)",
@@ -114,10 +116,11 @@ export default function BehindTheScenes() {
                                     }}>
                                         <Image
                                             src={item.image}
-                                            alt=""
+                                            alt={item.imageAlt}
                                             fill
                                             sizes="(max-width: 800px) 100vw, 740px"
-                                            style={{ objectFit: "contain", opacity: 0.45 }}
+                                            unoptimized
+                                            style={{ objectFit: "cover" }}
                                         />
                                     </div>
                                 )}
