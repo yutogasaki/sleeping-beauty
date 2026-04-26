@@ -211,7 +211,7 @@ a {
   content: "";
   position: absolute;
   inset: clamp(0.55rem, 1.6vw, 1.35rem);
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
   border: 1px solid rgba(var(--color-ink-rgb), 0.42);
   border-radius: 12px;
@@ -227,7 +227,7 @@ a {
   right: clamp(1rem, 4vw, 3rem);
   bottom: 0;
   height: 1px;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
   background: linear-gradient(
     90deg,
@@ -245,7 +245,7 @@ a {
 .hero-poster-mobile {
   position: absolute;
   inset: 0;
-  z-index: -3;
+  z-index: 0;
   pointer-events: none;
   background-image: url("/images/sleeping-beauty-hero-poster.png");
   background-repeat: no-repeat;
