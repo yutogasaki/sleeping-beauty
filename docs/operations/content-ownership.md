@@ -46,6 +46,7 @@ Open this note when changing any of the following:
   - chapter labels
   - chapter titles
   - short summaries
+  - featured, finale, or principal cast program highlights
   - shared program note
 - After changing shared event facts, review the main consumers:
   - [src/components/EventInfo.tsx](/Users/yutogasaki/Projects/sleeping-beauty/src/components/EventInfo.tsx)

@@ -5,10 +5,10 @@ import { EVENT_DETAILS } from "../lib/eventDetails";
 
 export default function Footer() {
     return (
-        <footer style={{
+        <footer className="storybook-footer" style={{
             background:
-                "linear-gradient(180deg, rgba(var(--color-paper-rgb), 0.96) 0%, rgba(var(--color-paper-aged-rgb), 0.55) 100%)",
-            borderTop: "1px solid var(--color-line)",
+                "linear-gradient(180deg, rgba(var(--color-wood-dark-rgb), 0.98) 0%, rgba(var(--color-forest-dark-rgb), 1) 100%)",
+            borderTop: "1px solid rgba(var(--color-gold-rgb), 0.38)",
             position: "relative",
             overflow: "hidden",
         }}>

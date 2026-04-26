@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { type CSSProperties, useState } from "react";
 
 type CastType = {
     id: string;
@@ -12,6 +12,10 @@ type CastType = {
     description: string;
     color: string;
     image: string;
+    imageScale?: number;
+    imageOffsetX?: string;
+    imageOffsetY?: string;
+    imageFilter?: string;
 };
 
 const castData: CastType[] = [
@@ -21,7 +25,9 @@ const castData: CastType[] = [
         name: "成田 寧音",
         description: "16歳の誕生日に呪いを受け、100年の眠りにつく美しき王女。気品高く、すべての者に愛される光のような存在。",
         color: "#c97970",
-        image: "/images/cast-aurora.png"
+        image: "/images/cast-aurora-sage.png",
+        imageScale: 1.07,
+        imageFilter: "brightness(0.94) contrast(1.26) saturate(1.2)"
     },
     {
         id: "desire",
@@ -30,7 +36,9 @@ const castData: CastType[] = [
         affiliation: "神澤千景バレエスタジオ",
         description: "100年後の世界でリラの精に導かれ、オーロラ姫の呪いを解く運命の王子。",
         color: "#7f9468",
-        image: "/images/cast-desire.png"
+        image: "/images/cast-desire-sage.png",
+        imageScale: 1.07,
+        imageFilter: "brightness(0.94) contrast(1.26) saturate(1.2)"
     },
     {
         id: "lilac",
@@ -38,30 +46,46 @@ const castData: CastType[] = [
         name: "甲斐 愛",
         description: "善と知恵の象徴。カラボスの呪いを和らげ、オーロラと王国を絶望から救う希望の光。",
         color: "#b58a50",
-        image: "/images/cast-lilac.png"
+        image: "/images/cast-lilac-sage.png",
+        imageScale: 1.06,
+        imageFilter: "brightness(0.94) contrast(1.26) saturate(1.2)"
     },
     {
         id: "carabosse",
         role: "カラボス",
         name: "伊藤 あゆみ",
-        description: "物語の運命を動かす闇の妖精。姫に呪いをかけ、百年の眠りへと導く重要な役どころ。",
+        description: "物語の運命を揺り動かす闇の妖精。祝宴に影を落とし、百年の眠りへの扉を開く。",
         color: "#8a5148",
-        image: "/images/cast-carabosse.png"
+        image: "/images/cast-carabosse-sage.png",
+        imageScale: 1.04,
+        imageFilter: "brightness(0.95) contrast(1.18) saturate(1.08)"
+    },
+    {
+        id: "florina",
+        role: "フロリナ王女",
+        name: "藤原 彩愛",
+        description: "青い鳥とともに祝宴へ軽やかな風を運ぶ王女。気品の中に、晴れやかな躍動がきらめく。",
+        color: "#6f8ca7",
+        image: "/images/cast-florina-sage.png",
+        imageScale: 1.05,
+        imageFilter: "brightness(0.94) contrast(1.26) saturate(1.2)"
     },
     {
         id: "bluebird",
         role: "青い鳥",
         name: "南野 高廣",
         affiliation: "松岡伶子バレエ団",
-        description: "フロリナ姫とともに祝宴を彩る、軽やかで華やかな青い翼の役どころ。",
+        description: "フロリナ王女に寄り添い、空へ誘うように舞う青い鳥。祝宴に伸びやかな輝きを添える。",
         color: "#6f8ca7",
-        image: "/images/cast-bluebird.png"
+        image: "/images/cast-bluebird-sage.png",
+        imageScale: 1.04,
+        imageFilter: "brightness(0.94) contrast(1.24) saturate(1.28)"
     }
 ];
 
 export default function CastCards() {
     return (
-        <section className="section-padding ornament-section" style={{ position: "relative", zIndex: 10, overflow: "hidden" }}>
+        <section className="section-padding ornament-section storybook-grove-section" style={{ position: "relative", zIndex: 10, overflow: "hidden" }}>
             {/* Decorative Background Elements */}
             <div style={{ position: "absolute", top: "2rem", left: "50%", width: "min(42rem, 72vw)", height: "1px", transform: "translateX(-50%)", background: "linear-gradient(90deg, transparent, rgba(var(--color-gold-rgb), 0.5), transparent)", pointerEvents: "none" }} />
 
@@ -112,6 +136,11 @@ function FlipCard({
     index: number;
 }) {
     const [isFlipped, setIsFlipped] = useState(false);
+    const portraitStyle = {
+        "--portrait-scale": cast.imageScale?.toString() ?? "0.96",
+        "--portrait-x": cast.imageOffsetX ?? "0px",
+        "--portrait-y": cast.imageOffsetY ?? "0px",
+    } as CSSProperties;
 
     return (
         <motion.div
@@ -162,13 +191,24 @@ function FlipCard({
                     <div style={{ position: "absolute", top: "10px", bottom: "10px", left: "10px", right: "10px", border: `1px solid ${cast.color}40`, borderRadius: "10px", pointerEvents: "none" }} />
                     <div style={{ position: "absolute", top: "15px", bottom: "15px", left: "15px", right: "15px", border: `1px dashed ${cast.color}2f`, borderRadius: "8px", pointerEvents: "none" }} />
 
-                    <div style={{ width: "196px", height: "196px", marginBottom: "1rem", filter: `drop-shadow(0 14px 18px ${cast.color}42)`, position: "relative", overflow: "hidden", borderRadius: "50%", border: `1px solid ${cast.color}66`, background: "var(--color-forest)" }}>
+                    <div
+                        className="cast-portrait-medallion"
+                        style={{
+                            ...portraitStyle,
+                            filter: `drop-shadow(0 14px 18px ${cast.color}34)`,
+                            border: `1px solid ${cast.color}5f`,
+                        }}
+                    >
                         <Image
                             src={cast.image}
                             alt=""
                             fill
                             sizes="196px"
-                            style={{ objectFit: "cover", filter: "brightness(1.14) contrast(1.1) saturate(1.08)", transform: "scale(1.04)" }}
+                            className="cast-portrait-image"
+                            style={{
+                                objectFit: "cover",
+                                filter: cast.imageFilter,
+                            }}
                         />
                     </div>
                     <h4 style={{ color: "var(--color-text)", fontSize: "1.4rem", lineHeight: 1.3, margin: 0, fontFamily: "var(--font-heading)", textShadow: "0 1px 0 rgba(255,255,255,0.65)" }}>
@@ -210,7 +250,6 @@ function FlipCard({
                     </h4>
                     {cast.affiliation && (
                         <p style={{ color: "var(--color-text-muted)", fontSize: "0.78rem", lineHeight: 1.6, marginBottom: "1rem" }}>
-                            <span style={{ color: cast.color, letterSpacing: "0.12em" }}>所属</span><br />
                             {cast.affiliation}
                         </p>
                     )}

@@ -11,7 +11,7 @@ export default function EventInfo() {
     return (
         <section
             id="event-info"
-            className="section-padding flex-center ornament-section"
+            className="section-padding flex-center ornament-section storybook-stage-section"
             style={{ position: "relative", zIndex: 10, scrollMarginTop: "2rem" }}
         >
             <div className="container" style={{ width: "100%", maxWidth: "960px" }}>
@@ -83,47 +83,169 @@ export default function EventInfo() {
                         </div>
 
                         {/* Program */}
-                        <div style={{ borderBottom: "1px solid var(--color-line)", paddingBottom: "1.5rem" }}>
+                        <div className="event-program-summary" style={{ borderBottom: "1px solid var(--color-line)", paddingBottom: "1.5rem" }}>
                             <h4 style={{ color: "var(--color-sage)", fontSize: "1.1rem", marginBottom: "1rem" }}>構成（プログラム）</h4>
-                            <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                            <ul className="event-program-list" style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
                                 {PROGRAM_CHAPTERS.map((chapter) => (
                                     <li
                                         key={chapter.id}
+                                        className="event-program-chapter"
                                         style={{
                                             padding: "0 0 1rem",
                                             borderBottom: "1px solid rgba(var(--color-ink-rgb), 0.12)",
                                         }}
                                     >
                                         <span
+                                            className="event-program-label"
                                             style={{
                                                 display: "block",
                                                 color: chapter.featured ? "var(--color-accent)" : "var(--color-sage)",
                                                 fontSize: "0.82rem",
-                                                letterSpacing: "0.14em",
+                                                letterSpacing: "0.08em",
                                                 marginBottom: "0.35rem",
-                                                fontWeight: chapter.featured ? "bold" : undefined,
+                                                fontWeight: chapter.featured ? 700 : 600,
                                             }}
                                         >
                                             {chapter.chapterLabel}
                                         </span>
                                         <span
+                                            className="event-program-title"
                                             style={{
                                                 display: "block",
                                                 color: chapter.featured ? "var(--color-accent)" : "var(--color-text)",
                                                 fontSize: "1.05rem",
                                                 marginBottom: "0.3rem",
-                                                fontWeight: chapter.featured ? "bold" : undefined,
+                                                fontWeight: chapter.featured ? 700 : 600,
                                             }}
                                         >
                                             {chapter.title}
                                         </span>
-                                        <span style={{ display: "block", color: "var(--color-text-muted)", fontSize: "0.92rem" }}>
+                                        <span className="event-program-summary-text" style={{ display: "block", color: "var(--color-text-muted)", fontSize: "0.92rem" }}>
                                             {chapter.summary}
                                         </span>
+                                        {chapter.finale && (
+                                            <div
+                                                className="event-program-detail"
+                                                style={{
+                                                    marginTop: "0.85rem",
+                                                    padding: "0.75rem 0 0.1rem 1rem",
+                                                    borderLeft: `2px solid ${chapter.featured ? "var(--color-accent)" : "var(--color-sage)"}`,
+                                                    textAlign: "left",
+                                                }}
+                                            >
+                                                <span
+                                                    className="event-program-detail-label"
+                                                    style={{
+                                                        display: "block",
+                                                        color: "var(--color-text-muted)",
+                                                        fontSize: "0.74rem",
+                                                        letterSpacing: "0.08em",
+                                                        marginBottom: "0.25rem",
+                                                    }}
+                                                >
+                                                    主な演目
+                                                </span>
+                                                <span
+                                                    className="event-program-detail-title"
+                                                    style={{
+                                                        display: "block",
+                                                        color: "var(--color-text)",
+                                                        fontSize: "1rem",
+                                                        lineHeight: 1.65,
+                                                        letterSpacing: "0.03em",
+                                                        marginBottom: "0.25rem",
+                                                    }}
+                                                >
+                                                    {chapter.finale.title}
+                                                </span>
+                                                <span
+                                                    className="event-program-detail-performers"
+                                                    style={{
+                                                        display: "block",
+                                                        color: "var(--color-text-muted)",
+                                                        fontSize: "0.86rem",
+                                                        lineHeight: 1.7,
+                                                    }}
+                                                >
+                                                    {chapter.finale.performers}
+                                                </span>
+                                            </div>
+                                        )}
+                                        {chapter.principalCast && (
+                                            <div
+                                                className="event-program-detail"
+                                                style={{
+                                                    marginTop: "0.85rem",
+                                                    padding: "0.75rem 0 0.1rem 1rem",
+                                                    borderLeft: `2px solid ${chapter.featured ? "var(--color-accent)" : "var(--color-sage)"}`,
+                                                    textAlign: "left",
+                                                }}
+                                            >
+                                                <span
+                                                    className="event-program-detail-label"
+                                                    style={{
+                                                        display: "block",
+                                                        color: "var(--color-text-muted)",
+                                                        fontSize: "0.74rem",
+                                                        letterSpacing: "0.08em",
+                                                        marginBottom: "0.45rem",
+                                                    }}
+                                                >
+                                                    主な配役
+                                                </span>
+                                                <dl
+                                                    className="event-program-cast-list"
+                                                    style={{
+                                                        display: "flex",
+                                                        flexDirection: "column",
+                                                        gap: "0.32rem",
+                                                        margin: 0,
+                                                    }}
+                                                >
+                                                    {chapter.principalCast.map((cast) => (
+                                                        <div
+                                                            key={`${cast.role}-${cast.performer}`}
+                                                            className="event-program-cast-row"
+                                                            style={{
+                                                                display: "grid",
+                                                                gridTemplateColumns: "minmax(0, 1.35fr) minmax(0, 1fr)",
+                                                                columnGap: "1rem",
+                                                                paddingBottom: "0.32rem",
+                                                                borderBottom: "1px solid rgba(var(--color-ink-rgb), 0.1)",
+                                                            }}
+                                                        >
+                                                            <dt
+                                                                className="event-program-cast-role"
+                                                                style={{
+                                                                    color: "var(--color-text)",
+                                                                    fontSize: "0.92rem",
+                                                                    lineHeight: 1.65,
+                                                                    margin: 0,
+                                                                }}
+                                                            >
+                                                                {cast.role}
+                                                            </dt>
+                                                            <dd
+                                                                className="event-program-cast-performer"
+                                                                style={{
+                                                                    color: "var(--color-text)",
+                                                                    fontWeight: 600,
+                                                                    fontSize: "0.92rem",
+                                                                    lineHeight: 1.65,
+                                                                    margin: 0,
+                                                                }}
+                                                            >
+                                                                {cast.performer}
+                                                            </dd>
+                                                        </div>
+                                                    ))}
+                                                </dl>
+                                            </div>
+                                        )}
                                     </li>
                                 ))}
                             </ul>
-                            <p style={{ color: "var(--color-text-muted)", fontSize: "0.82rem", marginTop: "0.9rem" }}>
+                            <p className="event-program-note" style={{ color: "var(--color-text-muted)", fontSize: "0.82rem", marginTop: "0.9rem" }}>
                                 {PROGRAM_NOTE}
                             </p>
                         </div>

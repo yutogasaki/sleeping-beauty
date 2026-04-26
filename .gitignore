@@ -12,6 +12,11 @@
 
 # testing
 /coverage
+/test-results
+
+# local verification artifacts
+/.playwright-cli
+/output
 
 # next.js
 /.next/

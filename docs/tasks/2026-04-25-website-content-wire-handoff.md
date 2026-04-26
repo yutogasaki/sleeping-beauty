@@ -345,8 +345,9 @@ Planned flower types:
 ```text
 花束 / 出演者へ気持ちを届ける、手渡ししやすいお祝い花。
 アレンジメント花 / 楽屋や受付まわりを上品に彩る置き型のお花。
-スタンド花 / 会場に華やぎを添える、舞台祝い向けのお花。
 ```
+
+Do not list or offer stand flowers. Stand flowers are prohibited for this event.
 
 ### Behind The Scenes
 

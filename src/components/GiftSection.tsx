@@ -19,11 +19,6 @@ const flowerProducts: FlowerProduct[] = [
         name: "アレンジメント花",
         description: "楽屋や受付まわりを上品に彩る置き型のお花。",
     },
-    {
-        id: "stand",
-        name: "スタンド花",
-        description: "会場に華やぎを添える、舞台祝い向けのお花。",
-    },
 ];
 
 export default function GiftSection() {

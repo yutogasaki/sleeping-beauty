@@ -8,7 +8,7 @@ export const EVENT_DETAILS = {
   studioUrl: "https://ayami-ballet.com/",
   instagramUrl: "https://www.instagram.com/ayami.ballet.studio/",
   ticketSalesUrl: "" as string,
-  ticketSalesNotice: "来場用デジタルチケットは7月販売開始予定",
+  ticketSalesNotice: "チケットは7月販売開始予定",
   seatLabel: "全席自由",
   dateLabel: "2026年8月23日 (日)",
   footerDateLabel: "2026年8月23日（日）",

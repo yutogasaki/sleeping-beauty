@@ -19,15 +19,15 @@ const timelineData: TimelineItemType[] = [
         date: "2026.04.01",
         title: "配役決定",
         description: "本番に向けて配役が決定しました。これから作品づくりと稽古の記録を少しずつお届けしていきます。",
-        image: "/images/behind-the-scenes-casting.svg",
-        imageAlt: "バレエシューズと小さなチュチュのイラスト。2026.04.01 配役決定",
+        image: null,
+        imageAlt: "",
         status: "completed"
     }
 ];
 
 export default function BehindTheScenes() {
     return (
-        <section className="section-padding ornament-section" style={{ position: "relative", zIndex: 10, borderTop: "1px solid var(--color-line)" }}>
+        <section className="section-padding ornament-section storybook-closing-section" style={{ position: "relative", zIndex: 10 }}>
             <div className="container" style={{ maxWidth: "800px" }}>
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

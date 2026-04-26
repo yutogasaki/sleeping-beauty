@@ -20,6 +20,7 @@ Make "王国への贈り物" clearly describe a future real flower-purchase flow
 
 - The gift section uses "王国への贈り物" and explains that real celebration flowers will be purchasable and delivered to performers.
 - Planned flower types are presented inside the existing ornament/glass-panel visual system, with no fake payment affordance.
+- Stand flowers are not listed or offered because they are prohibited for this event.
 - The behind-the-scenes record for `2026.04.01 / 配役決定` uses a purpose-built cute ballet image containing the requested date/title text.
 - Desktop and mobile layouts remain readable.
 
