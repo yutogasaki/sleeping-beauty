@@ -1046,6 +1046,217 @@ a {
   --message-light-glow: rgba(237, 247, 255, 0.48);
 }
 
+.student-page {
+  min-height: 100dvh;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 12%, rgba(var(--color-gold-rgb), 0.2), transparent 18rem),
+    radial-gradient(circle at 82% 80%, rgba(var(--color-sage-rgb), 0.22), transparent 20rem),
+    linear-gradient(145deg, var(--color-paper-light) 0%, var(--color-paper) 46%, #d8b989 100%);
+  padding: clamp(1.2rem, 3vw, 2rem);
+}
+
+.student-page__backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(var(--color-paper-light-rgb), 0.84), rgba(var(--color-paper-rgb), 0.28) 52%, rgba(var(--color-forest-dark-rgb), 0.12)),
+    url("/images/message-forest-castle-night.png");
+  background-position: center;
+  background-size: cover;
+  opacity: 0.26;
+  filter: sepia(0.2) saturate(0.82);
+}
+
+.student-page__shell {
+  width: min(100%, 1120px);
+  min-height: calc(100dvh - clamp(2.4rem, 6vw, 4rem));
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(360px, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.student-page__copy {
+  max-width: 34rem;
+  padding: clamp(1rem, 3vw, 2rem) 0;
+}
+
+.student-page__eyebrow {
+  color: var(--color-oxblood);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  letter-spacing: 0.22em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.student-page__copy h2 {
+  color: var(--color-ink);
+  font-size: clamp(2.2rem, 7vw, 5.4rem);
+  line-height: 1.04;
+  margin-bottom: 1.3rem;
+  max-width: 8em;
+}
+
+.student-page__copy p:not(.student-page__eyebrow) {
+  color: var(--color-ink-muted);
+  font-size: 1.02rem;
+  line-height: 1.95;
+  max-width: 31rem;
+}
+
+.student-page__home-link {
+  border-bottom: 1px solid rgba(var(--color-oxblood-rgb), 0.5);
+  color: var(--color-oxblood);
+  display: inline-block;
+  font-family: var(--font-heading);
+  letter-spacing: 0.06em;
+  margin-top: 2rem;
+  padding-bottom: 0.2rem;
+}
+
+.student-page__form-panel {
+  padding: clamp(1.4rem, 4vw, 2.6rem);
+}
+
+.message-submission-form h1 {
+  color: var(--color-accent);
+  font-size: clamp(1.55rem, 4vw, 2rem);
+  line-height: 1.25;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.message-submission-form__intro {
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  line-height: 1.75;
+  margin: 0 auto 1.5rem;
+  max-width: 29rem;
+  text-align: center;
+}
+
+.message-submission-form__error,
+.message-submission-form__field p,
+.message-submission-form__colors p {
+  color: #a5444d;
+  font-size: 0.84rem;
+  margin-top: 0.42rem;
+}
+
+.message-submission-form__error {
+  background: rgba(165, 68, 77, 0.1);
+  border: 1px solid rgba(165, 68, 77, 0.3);
+  border-radius: 8px;
+  margin: 0 0 1rem;
+  padding: 0.72rem 0.85rem;
+  text-align: center;
+}
+
+.message-submission-form__field {
+  margin-bottom: 1.15rem;
+}
+
+.message-submission-form__field label,
+.message-submission-form__colors legend {
+  color: var(--color-text-muted);
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.message-submission-form__field label span {
+  float: right;
+}
+
+.message-submission-form__field input,
+.message-submission-form__field textarea {
+  background: rgba(var(--color-paper-light-rgb), 0.72);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  color: var(--color-text);
+  font: inherit;
+  outline: none;
+  padding: 0.8rem;
+  width: 100%;
+}
+
+.message-submission-form__field textarea {
+  resize: vertical;
+}
+
+.message-submission-form__field input[aria-invalid="true"],
+.message-submission-form__field textarea[aria-invalid="true"] {
+  border-color: #a5444d;
+}
+
+.message-submission-form__colors {
+  border: 0;
+  margin: 0 0 1.15rem;
+  padding: 0;
+}
+
+.message-submission-form__colors > div {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.message-submission-form__colors label {
+  align-items: center;
+  background: rgba(var(--color-paper-rgb), 0.42);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.24);
+  border-radius: 8px;
+  color: var(--color-text);
+  cursor: pointer;
+  display: flex;
+  font-size: 0.86rem;
+  gap: 0.35rem;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.55rem 0.4rem;
+}
+
+.message-submission-form__swatch {
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(var(--color-gold-rgb), 0.26);
+  display: inline-block;
+  height: 0.78rem;
+  width: 0.78rem;
+}
+
+.message-submission-form__swatch--yellow {
+  background: #e7bb58;
+}
+
+.message-submission-form__swatch--pink {
+  background: #d9859c;
+}
+
+.message-submission-form__swatch--blue {
+  background: #74a6b8;
+}
+
+.message-submission-form__swatch--pure {
+  background: #f7f5ec;
+  border: 1px solid rgba(var(--color-ink-rgb), 0.2);
+}
+
+.message-submission-form .btn-primary {
+  width: 100%;
+}
+
+.message-submission-form .btn-primary:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
 @media (max-width: 767px) {
   .section-padding {
     padding: 4.25rem 0;
@@ -1367,6 +1578,55 @@ a {
     height: 30% !important;
     right: -16% !important;
     bottom: -8% !important;
+  }
+
+  .student-page {
+    overflow-y: auto;
+    padding: 0.9rem;
+  }
+
+  .student-page__backdrop {
+    background-image:
+      linear-gradient(180deg, rgba(var(--color-paper-light-rgb), 0.92), rgba(var(--color-paper-rgb), 0.76)),
+      url("/images/message-forest-castle-night-mobile.png");
+    opacity: 0.28;
+  }
+
+  .student-page__shell {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    justify-content: center;
+    min-height: calc(100dvh - 1.8rem);
+  }
+
+  .student-page__copy {
+    max-width: none;
+    padding: 0.5rem 0 0;
+  }
+
+  .student-page__copy h2 {
+    font-size: clamp(2rem, 13vw, 3.2rem);
+    margin-bottom: 0.8rem;
+    max-width: 9em;
+  }
+
+  .student-page__copy p:not(.student-page__eyebrow) {
+    font-size: 0.94rem;
+    line-height: 1.75;
+  }
+
+  .student-page__home-link {
+    margin-top: 1rem;
+  }
+
+  .student-page__form-panel {
+    padding: 1.35rem 1rem;
+    width: 100%;
+  }
+
+  .message-submission-form__colors > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .gift-panel {
