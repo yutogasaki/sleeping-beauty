@@ -27,7 +27,7 @@ const castData: CastType[] = [
         color: "#c97970",
         image: "/images/cast-aurora-sage.png",
         imageScale: 1.07,
-        imageFilter: "brightness(0.94) contrast(1.26) saturate(1.2)"
+        imageFilter: "brightness(1.03) contrast(1.1) saturate(1.06)"
     },
     {
         id: "desire",
@@ -38,7 +38,7 @@ const castData: CastType[] = [
         color: "#7f9468",
         image: "/images/cast-desire-sage.png",
         imageScale: 1.07,
-        imageFilter: "brightness(0.94) contrast(1.26) saturate(1.2)"
+        imageFilter: "brightness(1.03) contrast(1.1) saturate(1.06)"
     },
     {
         id: "lilac",
@@ -48,7 +48,7 @@ const castData: CastType[] = [
         color: "#b58a50",
         image: "/images/cast-lilac-sage.png",
         imageScale: 1.06,
-        imageFilter: "brightness(0.94) contrast(1.26) saturate(1.2)"
+        imageFilter: "brightness(1.03) contrast(1.1) saturate(1.06)"
     },
     {
         id: "carabosse",
@@ -58,7 +58,7 @@ const castData: CastType[] = [
         color: "#8a5148",
         image: "/images/cast-carabosse-sage.png",
         imageScale: 1.04,
-        imageFilter: "brightness(0.95) contrast(1.18) saturate(1.08)"
+        imageFilter: "brightness(1.02) contrast(1.08) saturate(1.04)"
     },
     {
         id: "florina",
@@ -68,7 +68,7 @@ const castData: CastType[] = [
         color: "#6f8ca7",
         image: "/images/cast-florina-sage.png",
         imageScale: 1.05,
-        imageFilter: "brightness(0.94) contrast(1.26) saturate(1.2)"
+        imageFilter: "brightness(1.03) contrast(1.1) saturate(1.06)"
     },
     {
         id: "bluebird",
@@ -79,7 +79,7 @@ const castData: CastType[] = [
         color: "#6f8ca7",
         image: "/images/cast-bluebird-sage.png",
         imageScale: 1.04,
-        imageFilter: "brightness(0.94) contrast(1.24) saturate(1.28)"
+        imageFilter: "brightness(1.03) contrast(1.1) saturate(1.08)"
     }
 ];
 
@@ -108,13 +108,16 @@ export default function CastCards() {
                     </p>
                 </motion.div>
 
-                <div style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "center",
-                    gap: "2rem",
-                    perspective: "1000px" // 3D効果の基準点
-                }}>
+                <div
+                    className="cast-card-grid"
+                    style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        justifyContent: "center",
+                        gap: "2rem",
+                        perspective: "1000px" // 3D効果の基準点
+                    }}
+                >
                     {castData.map((cast, index) => (
                         <FlipCard
                             key={cast.id}
@@ -148,6 +151,7 @@ function FlipCard({
             whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.8, delay: index * 0.15, type: "spring" }}
+            className="cast-flip-card"
             style={{
                 width: "260px",
                 height: "380px",
@@ -167,7 +171,7 @@ function FlipCard({
                 }}
             >
                 {/* --- 表面 (Front) --- */}
-                <div style={{
+                <div className="cast-card-face cast-card-face-front" style={{
                     position: "absolute",
                     width: "100%",
                     height: "100%",
@@ -202,26 +206,30 @@ function FlipCard({
                         <Image
                             src={cast.image}
                             alt=""
-                            fill
-                            sizes="196px"
+                            width={196}
+                            height={196}
+                            loading="eager"
+                            quality={95}
                             className="cast-portrait-image"
                             style={{
+                                width: "100%",
+                                height: "100%",
                                 objectFit: "cover",
                                 filter: cast.imageFilter,
                             }}
                         />
                     </div>
-                    <h4 style={{ color: "var(--color-text)", fontSize: "1.4rem", lineHeight: 1.3, margin: 0, fontFamily: "var(--font-heading)", textShadow: "0 1px 0 rgba(255,255,255,0.65)" }}>
+                    <h4 className="cast-role-title" style={{ color: "var(--color-text)", fontSize: "1.4rem", lineHeight: 1.3, margin: 0, fontFamily: "var(--font-heading)", textShadow: "0 1px 0 rgba(255,255,255,0.65)" }}>
                         {cast.role}
                     </h4>
 
-                    <div style={{ marginTop: "auto", fontSize: "0.8rem", color: cast.color, letterSpacing: "0.2em", opacity: 0.82 }}>
+                    <div className="cast-flip-hint" style={{ marginTop: "auto", fontSize: "0.8rem", color: cast.color, letterSpacing: "0.2em", opacity: 0.82 }}>
                         TAP TO FLIP
                     </div>
                 </div>
 
                 {/* --- 裏面 (Back) --- */}
-                <div style={{
+                <div className="cast-card-face cast-card-face-back" style={{
                     position: "absolute",
                     width: "100%",
                     height: "100%",
@@ -242,18 +250,18 @@ function FlipCard({
                 }}>
                     <div style={{ position: "absolute", top: "10px", bottom: "10px", left: "10px", right: "10px", border: `1px solid ${cast.color}40`, borderRadius: "10px", pointerEvents: "none" }} />
 
-                    <p style={{ color: cast.color, fontSize: "0.9rem", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
+                    <p className="cast-back-role" style={{ color: cast.color, fontSize: "0.9rem", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
                         {cast.role}
                     </p>
-                    <h4 style={{ color: "var(--color-text)", fontSize: "1.8rem", fontFamily: "var(--font-heading)", marginBottom: cast.affiliation ? "0.7rem" : "1.5rem", borderBottom: `1px solid ${cast.color}40`, paddingBottom: "0.5rem" }}>
+                    <h4 className="cast-back-name" style={{ color: "var(--color-text)", fontSize: "1.8rem", fontFamily: "var(--font-heading)", marginBottom: cast.affiliation ? "0.7rem" : "1.5rem", borderBottom: `1px solid ${cast.color}40`, paddingBottom: "0.5rem" }}>
                         {cast.name}
                     </h4>
                     {cast.affiliation && (
-                        <p style={{ color: "var(--color-text-muted)", fontSize: "0.78rem", lineHeight: 1.6, marginBottom: "1rem" }}>
+                        <p className="cast-back-affiliation" style={{ color: "var(--color-text-muted)", fontSize: "0.78rem", lineHeight: 1.6, marginBottom: "1rem" }}>
                             {cast.affiliation}
                         </p>
                     )}
-                    <p style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", lineHeight: 1.8, textAlign: "left" }}>
+                    <p className="cast-back-description" style={{ color: "var(--color-text-muted)", fontSize: "0.9rem", lineHeight: 1.8, textAlign: "left" }}>
                         {cast.description}
                     </p>
 

@@ -18,7 +18,7 @@ const timelineData: TimelineItemType[] = [
         id: "1",
         date: "2026.04.01",
         title: "配役決定",
-        description: "本番に向けて配役が決定しました。これから作品づくりと稽古の記録を少しずつお届けしていきます。",
+        description: "本番に向けて配役が決定しました。これから作品づくりとレッスンの記録を少しずつお届けしていきます。",
         image: null,
         imageAlt: "",
         status: "completed"

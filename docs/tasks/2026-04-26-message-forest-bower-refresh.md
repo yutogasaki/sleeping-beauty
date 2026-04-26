@@ -1,8 +1,8 @@
-# Message Forest Dark Background Refresh
+# Message Forest Balanced Background Refresh
 
 ## Objective
 
-Refresh the "森に灯る光" message-section background with a darker generated forest image matching the provided antique night-forest reference, including a dedicated mobile portrait version.
+Refresh the "森に灯る光" message-section background with a generated forest image that feels softly enchanted, readable, and consistent with the site's antique ballet-program atmosphere, including a dedicated mobile portrait version.
 
 ## Non-goals
 
@@ -17,9 +17,10 @@ Refresh the "森に灯る光" message-section background with a darker generated
 
 ## Acceptance Criteria
 
-- Desktop message section uses a single horizontal dark forest background.
-- Mobile message section uses a single portrait dark forest background.
+- Desktop message section uses a single horizontal sage/olive forest background.
+- Mobile message section uses a single portrait sage/olive forest background.
 - The background keeps the center readable while adding small warm forest lights and restrained rose/vine detail near the edges.
+- The image avoids both overly black night-forest contrast and overly pale parchment contrast.
 - The top poster hero remains unchanged.
 - Background images do not double-render.
 

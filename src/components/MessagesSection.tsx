@@ -274,10 +274,10 @@ export default function MessagesSection() {
                 <div className="forest-panel" style={{ position: "relative", minHeight: "82dvh", overflow: "hidden", padding: "clamp(3rem, 7vw, 5rem) clamp(1rem, 4vw, 2.5rem)" }}>
 
                     {/* Background Forest Layer */}
-                    <div className="message-forest-bg" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.72 }}>
+                    <div className="message-forest-bg" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 1 }}>
                         <Image
                             className="message-forest-bg-image message-forest-bg-image--desktop"
-                            src="/images/message-forest-dark.png"
+                            src="/images/message-forest-castle-night.png"
                             alt=""
                             aria-hidden="true"
                             fill
@@ -285,7 +285,7 @@ export default function MessagesSection() {
                         />
                         <Image
                             className="message-forest-bg-image message-forest-bg-image--mobile"
-                            src="/images/message-forest-dark-mobile.png"
+                            src="/images/message-forest-castle-night-mobile.png"
                             alt=""
                             aria-hidden="true"
                             fill
@@ -293,7 +293,7 @@ export default function MessagesSection() {
                         />
                     </div>
 
-                    <div style={{ position: "relative", zIndex: 10, textAlign: "center", marginBottom: "4rem" }}>
+                    <div className="message-forest-header" style={{ position: "relative", zIndex: 10, textAlign: "center", marginBottom: "4rem" }}>
                         <motion.h3
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -310,9 +310,10 @@ export default function MessagesSection() {
                     </div>
 
                     {/* Lights Container */}
-                    <div style={{ position: "relative", zIndex: 10, width: "100%", height: "60vh", maxWidth: "1000px", margin: "0 auto" }}>
+                    <div className="message-lights-stage" style={{ position: "relative", zIndex: 10, width: "100%", height: "60vh", maxWidth: "1000px", margin: "0 auto" }}>
                         {visibleMessages.map((msg) => {
                             const isActive = activeId === msg.id;
+                            const lightTheme = ["pink", "blue", "pure"].includes(msg.color_theme) ? msg.color_theme : "yellow";
 
                             return (
                                 <motion.div
@@ -346,27 +347,10 @@ export default function MessagesSection() {
                                         style={{ position: 'relative', width: "60px", height: "60px", margin: "0 auto" }}
                                         className="flex-center"
                                     >
-                                        <div style={{
-                                            position: 'relative', width: "60px", height: "60px", margin: "0 auto",
-                                            // color_theme に応じて色味を変えるフィルター処理
-                                            filter: msg.color_theme === 'pink' ? 'hue-rotate(300deg)' :
-                                                msg.color_theme === 'blue' ? 'hue-rotate(180deg)' :
-                                                    msg.color_theme === 'pure' ? 'grayscale(100%) brightness(2)' : 'none'
-                                        }}>
-                                            <Image
-                                                src="/images/light_particle.png"
-                                                alt="Light Particle"
-                                                width={60}
-                                                height={60}
-                                                style={{
-                                                    objectFit: "contain",
-                                                    mixBlendMode: "screen",
-                                                    filter: "brightness(1.5) contrast(2) drop-shadow(0 0 15px rgba(255, 235, 150, 0.9))",
-                                                    maskImage: "radial-gradient(circle, black 30%, transparent 70%)",
-                                                    WebkitMaskImage: "radial-gradient(circle, black 30%, transparent 70%)"
-                                                }}
-                                            />
-                                        </div>
+                                        <div
+                                            className={`message-light-orb message-light-orb--${lightTheme}`}
+                                            aria-hidden="true"
+                                        />
                                     </motion.div>
 
                                     {/* Popup Message was moved out to a modal */}
@@ -375,7 +359,7 @@ export default function MessagesSection() {
                         })}
                     </div>
 
-                    <div className="flex-center" style={{ gap: "0.8rem", flexWrap: "wrap", marginTop: "2rem", zIndex: 10, position: "relative" }}>
+                    <div className="message-forest-actions flex-center" style={{ gap: "0.8rem", flexWrap: "wrap", marginTop: "2rem", zIndex: 10, position: "relative" }}>
                         <button className="btn-primary" onClick={handleOpenForm}>
                             意気込みを投稿する（生徒専用）
                         </button>
@@ -406,6 +390,7 @@ export default function MessagesSection() {
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 0.16 }}
                         transition={{ duration: 2 }}
+                        className="message-crown-decoration"
                         style={{ position: 'absolute', bottom: "-10%", right: "-5%", width: "40%", height: "40%", pointerEvents: 'none' }}
                     >
                         <Image
